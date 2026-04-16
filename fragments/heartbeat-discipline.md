@@ -2,7 +2,7 @@
 
 На каждом wake (heartbeat или event) проверяй только **три** вещи:
 
-1. `PAPERCLIP_TASK_ID` задан? → это твоё назначение, делай его
+1. **Первый Bash на wake:** `echo "TASK=$PAPERCLIP_TASK_ID WAKE=$PAPERCLIP_WAKE_REASON"`. Если `TASK` непустой → это твоё назначение: `GET /api/issues/$PAPERCLIP_TASK_ID` + работай. **НЕ exit** на `inbox-lite=[]` если `TASK` set — paperclip всегда даёт TASK_ID для mention-wake'ов.
 2. `GET /api/agents/me` → есть issues с `assigneeAgentId=me` и статусом `in_progress`? → продолжай
 3. Есть комментарии/@mentions для тебя с `createdAt > last_heartbeat_at`? → отвечай
 
