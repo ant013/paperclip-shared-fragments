@@ -45,6 +45,8 @@
 
 **Правило:** handoff-комментарий всегда включает `@NextAgent` (с пробелом после имени). Это страхует от обоих путей.
 
+**Self-checkout при явном handoff'е:** если получил @-mention с explicit handoff-фразой (`"твой ход"`, `"подхвати"`, `"передаю"`) и sender уже запушил свои коммиты — делай `POST /api/issues/{id}/checkout` сам, не жди formal reassign.
+
 Пример правильного handoff'а:
 ```
 POST /api/issues/{id}/comments
