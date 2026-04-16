@@ -50,3 +50,26 @@
 POST /api/issues/{id}/comments
 body: "@CodeReviewer фикс готов ([STA-29](/STA/issues/STA-29)), re-review пожалуйста"
 ```
+
+### HTTP 409 на close/update — execution lock conflict
+
+Если `PATCH /api/issues/{id}` возвращает **409 Conflict** при попытке закрыть (`status=done`) или обновить issue — это **execution lock** другого агента. Поле `issues.execution_agent_name_key` хранит имя держателя lock'а.
+
+**Типичный сценарий:** PythonEngineer закончил работу на GIM-5 и пытается close, но lock держит CTO (assigned'ил задачу, но не released'ил lock). 409 возвращается → close не происходит → issue виснет.
+
+**Что делать:**
+
+1. **Получить держателя lock'а:** `GET /api/issues/{id}` → посмотреть `executionAgentNameKey` в response
+2. **Запросить release:** комментарий с @-mention держателя: `"@CTO release execution lock на [GIM-5], я готов close"`
+3. **Альтернатива — reassign:** если lock-holder недоступен, `PATCH /api/issues/{id}` с `assigneeAgentId=<original-assignee>` → originator закроет
+4. **НЕ делать:** не пытаться close повторно с тем же JWT — без release lock'а 409 будет возвращаться снова
+
+**Что НЕ делать:**
+- Direct SQL UPDATE на `execution_run_id=NULL` — обходит business logic paperclip'а (см. §6.7 в ops doc)
+- Создавать новую issue-копию — теряется история комментариев и review
+
+Пример release запроса от держателя:
+```
+POST /api/issues/{id}/release
+# lock освобождён, теперь assignee может close через PATCH
+```
