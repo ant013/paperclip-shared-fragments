@@ -1,8 +1,8 @@
-## Git workflow (железное правило)
+## Git workflow (iron rule)
 
-- Работа **только** в feature-ветке. Создаём из `develop`: `git checkout -b feature/X origin/develop`
-- PR открываем **в `develop`**, не в `main`. `main` обновляется только через release-flow (develop → main)
-- Перед PR: `git fetch origin && git rebase origin/develop`
-- Force push на `main`/`develop` — **запрещён**. На feature-ветке — только `--force-with-lease`
-- Прямые коммиты в `main`/`develop` — **запрещены**
-- Если ветки разошлись (develop diverged from main) — эскалируй Board, не действуй сам
+- Work **only** in a feature branch. Create from `develop`: `git checkout -b feature/X origin/develop`.
+- Open PR **into `develop`**, not `main`. `main` updates only via release flow (develop → main).
+- Before PR: `git fetch origin && git rebase origin/develop`.
+- Force push on `main` / `develop` — **forbidden**. On a feature branch — only `--force-with-lease`.
+- Direct commits to `main` / `develop` — **forbidden**.
+- Branches diverged (develop diverged from main) — escalate to Board, don't act yourself.

@@ -1,42 +1,43 @@
-## Anti-rubber-stamp enforcement (железное правило ревью)
+## Anti-rubber-stamp enforcement (iron review rule)
 
-Ревью без полного compliance чеклиста = **автоматический REQUEST CHANGES**. "LGTM" без механической проверки — запрещено.
+Review without a full compliance checklist = **automatic REQUEST CHANGES**. "LGTM" without mechanical verification — forbidden.
 
-### Формат compliance таблицы
+### Compliance table format
 
-Каждый пункт чеклиста ОБЯЗАН иметь одно из трёх состояний с доказательством:
+Every checklist item MUST have one of three states with evidence:
 
-| Статус | Значение | Требование |
-|--------|----------|------------|
-| `[x]` | Проверено, ок | **Цитата**: commit hash, файл:строка, имя теста, или screenshot |
-| `[ ]` | Проверено, НЕ ок | **BLOCKER**: что не так + что нужно сделать. Verdict = REQUEST CHANGES |
-| `[N/A]` | Не применимо | **Причина**: почему этот пункт не релевантен для данного PR |
+| Status | Meaning | Required |
+|---|---|---|
+| `[x]` | Checked, OK | **Quote**: commit hash, file:line, test name, or screenshot |
+| `[ ]` | Checked, NOT OK | **BLOCKER**: what's wrong + what to do. Verdict = REQUEST CHANGES |
+| `[N/A]` | Not applicable | **Reason**: why this item isn't relevant to this PR |
 
-### Запрещённые паттерны
+### Forbidden patterns
 
-- Пустой `[ ]` без `BLOCKER:` объяснения → **невалидный** ревью, переделывай
-- `[x]` без цитаты/доказательства → **невалидный**, добавь evidence
-- Пропущенный пункт (не упомянут вообще) → **невалидный**, заполни все
-- "Looks good", "LGTM", "всё ок" без полной таблицы → **невалидный**
-- Ссылка на "я проверил в уме" без артефакта → **невалидный**
+- Empty `[ ]` without `BLOCKER:` explanation → **invalid** review, redo.
+- `[x]` without quote / evidence → **invalid**, add evidence.
+- Item skipped (not mentioned at all) → **invalid**, fill all.
+- "Looks good", "LGTM", "всё ок" without full table → **invalid**.
+- Reference to "I checked in my head" without an artifact → **invalid**.
 
-### Пример корректного заполнения
+### Correct example
 
 ```
 ### Compliance
 
-- [x] Result<T> вместо throw — `AddMedicationUseCase.kt:28` возвращает `Result<Medication>`
-- [x] ViewModel через UseCase — `KitDetailViewModel.kt:45` вызывает `observeKitUseCase()`
-- [ ] Cross-platform smoke — BLOCKER: iOS bridge helper не обновлён для нового поля `imageUrl`
-- [N/A] Миграция forward-only — PR не трогает `server/supabase/migrations/`
-- [N/A] pgTAP тест — нет серверных изменений
+- [x] Result<T> instead of throw — `AddMedicationUseCase.kt:28` returns `Result<Medication>`
+- [x] ViewModel via UseCase — `KitDetailViewModel.kt:45` calls `observeKitUseCase()`
+- [ ] Cross-platform smoke — BLOCKER: iOS bridge helper not updated for new `imageUrl` field
+- [N/A] Forward-only migration — PR doesn't touch `server/supabase/migrations/`
+- [N/A] pgTAP test — no server-side changes
 ```
 
 ### Bug-registry feedback loop
 
-Когда продовый баг обнаружен и зафиксирован:
-1. Баг добавляется в `docs/bug-registry.md` с root cause и классом ошибки
-2. Из root cause выводится **новый пункт** в compliance чеклист
-3. Следующий PR, задевающий те же файлы/паттерны, **механически** проверяется по новому пункту
+When a prod bug is found and fixed:
 
-Это превращает "мы опять это пропустили" → "мы физически не можем это пропустить снова".
+1. Bug added to `docs/bug-registry.md` with root cause and error class.
+2. From the root cause, derive a **new item** in the compliance checklist.
+3. Next PR touching the same files / patterns is checked against the new item **mechanically**.
+
+Turns "we missed it again" → "we physically can't miss it again".

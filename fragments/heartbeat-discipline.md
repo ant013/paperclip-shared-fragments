@@ -1,77 +1,77 @@
 ## Heartbeat discipline
 
-На каждом wake (heartbeat или event) проверяй только **три** вещи:
+On every wake (heartbeat or event) check only **three** things:
 
-1. **Первый Bash на wake:** `echo "TASK=$PAPERCLIP_TASK_ID WAKE=$PAPERCLIP_WAKE_REASON"`. Если `TASK` непустой → это твоё назначение: `GET /api/issues/$PAPERCLIP_TASK_ID` + работай. **НЕ exit** на `inbox-lite=[]` если `TASK` set — paperclip всегда даёт TASK_ID для mention-wake'ов.
-2. `GET /api/agents/me` → есть issues с `assigneeAgentId=me` и статусом `in_progress`? → продолжай
-3. Есть комментарии/@mentions для тебя с `createdAt > last_heartbeat_at`? → отвечай
+1. **First Bash on wake:** `echo "TASK=$PAPERCLIP_TASK_ID WAKE=$PAPERCLIP_WAKE_REASON"`. If `TASK` non-empty → `GET /api/issues/$PAPERCLIP_TASK_ID` + work. **Do NOT exit** on `inbox-lite=[]` if `TASK` is set — paperclip always provides TASK_ID for mention-wakes.
+2. `GET /api/agents/me` → any issue with `assigneeAgentId=me` and `in_progress`? → continue.
+3. Comments / @mentions with `createdAt > last_heartbeat_at`? → reply.
 
-Если ничего из трёх — **exit немедленно** с комментарием `No assignments, idle exit`. Каждый idle heartbeat должен стоить **<500 токенов**.
+None of three → **exit immediately** with `No assignments, idle exit`. Each idle heartbeat must cost **<500 tokens**.
 
-### Память между сессиями — ЗАПРЕЩЕНА
+### Cross-session memory — FORBIDDEN
 
-Если в начале сессии ты "помнишь" прошлую работу (*"let me continue where I left off"*, *"я работал над STA-NN"*) — это **кэш claude CLI**, не реальность. **Игнорируй всё это.** Единственный источник правды — Paperclip API:
+If you "remember" past work at session start (*"let me continue where I left off"*) — that's claude CLI cache, not reality. Only source of truth is the Paperclip API:
 
-- Issue существует и назначена на тебя в текущем состоянии → работай
-- Issue удалена / cancelled / done → **не воскрешай, не переоткрывай, не пиши код "по памяти"**
-- Ты не помнишь issue ID из текущего промпта? Тогда её не существует. Запроси `GET /api/companies/{id}/issues?assigneeAgentId=me` и смотри что реально есть
+- Issue exists, assigned to you now → work
+- Issue deleted / cancelled / done → don't resurrect, don't reopen, don't write code "from memory"
+- Don't remember the issue ID from the current prompt? It doesn't exist — query `GET /api/companies/{id}/issues?assigneeAgentId=me`.
 
-**Никогда не начинай с "Let me continue where I left off"** без подтверждения issue в API. Board чистит очередь регулярно — старые задачи могут быть удалены. Если resumed session тебе что-то "напоминает" — это galaxy brain, игнорь и жди явного задания.
+Board cleans the queue regularly. If a resumed session "reminds" you of something — galaxy brain, ignore and wait for an explicit assignment.
 
-### Запрещено на idle heartbeat:
-- Брать `todo` issues которые никто не назначил на тебя. Unassigned ≠ "найду работу"
-- Брать `todo` со `updatedAt > 24h` без свежего Board-confirm, даже если назначены на тебя (stale)
-- Проверять git/logs/dashboards "на всякий случай"
-- Самовольно делать checkout на issue без явного задания
-- Создавать новые issues для "обнаруженных проблем" без запроса Board
+### Forbidden on idle heartbeat
 
-### Source of truth для работы:
-Работа начинается **только** от: (a) Board/CEO/manager создал/назначил issue в текущей сессии, (b) кто-то @упомянул тебя с конкретной задачей, (c) `PAPERCLIP_TASK_ID` передан при wake. Всё остальное — игнор.
+- Taking `todo` issues nobody assigned to you. Unassigned ≠ "I'll find work"
+- Taking `todo` with `updatedAt > 24h` without fresh Board confirm (stale)
+- Checking git / logs / dashboards "just in case"
+- Self-checkout to an issue without an explicit assignment
+- Creating new issues for "discovered problems" without Board request
 
-### @-упоминания: всегда пробел после имени
+### Source of truth
 
-Парсер paperclip'а ломается, если сразу после `@AgentName` идёт двоеточие, точка-с-запятой, скобка или кавычка. Токен захватывает знак в имя (например `CTO:` вместо `CTO`), упоминание не резолвится, wake-up для агента не ставится — **цепочка молча останавливается**.
+Work starts **only** from: (a) Board/CEO/manager created/assigned an issue this session, (b) someone @mentioned you with a concrete task, (c) `PAPERCLIP_TASK_ID` was passed at wake. Else — ignore.
 
-**Правильно:** `@CTO нужен фикс`, `@iOSEngineer проверь билд`, `@CodeReviewer, финальный review`  
-**Неправильно:** `@CTO: нужен фикс`, `@iOSEngineer;`, `(@CodeReviewer)` — всегда пробел после имени, пунктуацию ставь отдельно или после пробела.
+### @-mentions: always trailing space after name
 
-### Handoff: всегда @-упомянуть следующего агента
+Paperclip's parser captures trailing punctuation into the name (e.g. `@CTO:` becomes `CTO:`), the mention doesn't resolve, no wake is queued — **chain silently stalls**.
 
-Когда заканчиваешь свою фазу и передаёшь дальше — **обязательно @-упомяни** следующего агента в комментарии, даже если он уже assignee. Не полагайся на «он и так увидит».
+**Right:** `@CTO need a fix`, `@CodeReviewer, final review`
+**Wrong:** `@CTO: need a fix`, `@iOSEngineer;`, `(@CodeReviewer)` — punctuation goes after the space.
 
-Важное отличие endpoint'ов:
-- `POST /api/issues/{id}/comments` — будит assignee (если не self-comment и issue не closed) + всех @-упомянутых.
-- `PATCH /api/issues/{id}` с полем `comment` — будит **ТОЛЬКО** если сменился assignee, перешли из backlog, или есть @-упоминания в теле. Комментарий без @ на PATCH'е **не разбудит assignee** → цепочка встаёт молча.
+### Handoff: always @-mention the next agent
 
-**Правило:** handoff-комментарий всегда включает `@NextAgent` (с пробелом после имени). Это страхует от обоих путей.
+End of phase → **always @-mention** next agent in the comment, even if already assignee.
 
-**Self-checkout при явном handoff'е:** если получил @-mention с explicit handoff-фразой (`"твой ход"`, `"подхвати"`, `"передаю"`) и sender уже запушил свои коммиты — делай `POST /api/issues/{id}/checkout` сам, не жди formal reassign.
+Endpoint difference:
+- `POST /api/issues/{id}/comments` — wakes assignee (if not self-comment, issue not closed) + all @-mentioned.
+- `PATCH /api/issues/{id}` with `comment` — wakes **ONLY** if assignee changed, moved out of backlog, or body has @-mentions. No-mention comment on PATCH **won't wake assignee** → silent stall.
 
-Пример правильного handoff'а:
+**Rule:** handoff comment always includes `@NextAgent` (trailing space). Covers both paths.
+
+**Self-checkout on explicit handoff:** got an @-mention with explicit handoff phrase (`"your turn"`, `"pick it up"`, `"handing over"`) and sender already pushed → `POST /api/issues/{id}/checkout` yourself, don't wait for formal reassign.
+
+Example:
 ```
 POST /api/issues/{id}/comments
-body: "@CodeReviewer фикс готов ([STA-29](/STA/issues/STA-29)), re-review пожалуйста"
+body: "@CodeReviewer fix ready ([STA-29](/STA/issues/STA-29)), please re-review"
 ```
 
-### HTTP 409 на close/update — execution lock conflict
+### HTTP 409 on close/update — execution lock conflict
 
-Если `PATCH /api/issues/{id}` возвращает **409 Conflict** при попытке закрыть (`status=done`) или обновить issue — это **execution lock** другого агента. Поле `issues.execution_agent_name_key` хранит имя держателя lock'а.
+`PATCH /api/issues/{id}` → **409** = another agent's execution lock. Holder is in `issues.execution_agent_name_key`. Typical: implementer tries to close, but CTO assigned and didn't release the lock → 409 → issue hangs.
 
-**Типичный сценарий:** PythonEngineer закончил работу на GIM-5 и пытается close, но lock держит CTO (assigned'ил задачу, но не released'ил lock). 409 возвращается → close не происходит → issue виснет.
+**Do:**
 
-**Что делать:**
+1. `GET /api/issues/{id}` → read `executionAgentNameKey`.
+2. Comment to holder: `"@CTO release execution lock on [GIM-5], I'm ready to close"`.
+3. Alternative — if holder unavailable, `PATCH ... assigneeAgentId=<original-assignee>` → originator closes.
+4. Don't retry close with the same JWT — without release, 409 keeps coming.
 
-1. **Получить держателя lock'а:** `GET /api/issues/{id}` → посмотреть `executionAgentNameKey` в response
-2. **Запросить release:** комментарий с @-mention держателя: `"@CTO release execution lock на [GIM-5], я готов close"`
-3. **Альтернатива — reassign:** если lock-holder недоступен, `PATCH /api/issues/{id}` с `assigneeAgentId=<original-assignee>` → originator закроет
-4. **НЕ делать:** не пытаться close повторно с тем же JWT — без release lock'а 409 будет возвращаться снова
+**Don't:**
+- Direct SQL `UPDATE execution_run_id=NULL` — bypasses paperclip business logic (see §6.7 ops doc).
+- Create a new issue copy — loses comment + review history.
 
-**Что НЕ делать:**
-- Direct SQL UPDATE на `execution_run_id=NULL` — обходит business logic paperclip'а (см. §6.7 в ops doc)
-- Создавать новую issue-копию — теряется история комментариев и review
-
-Пример release запроса от держателя:
+Release (from holder):
 ```
 POST /api/issues/{id}/release
-# lock освобождён, теперь assignee может close через PATCH
+# lock released, assignee can close via PATCH
 ```

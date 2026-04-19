@@ -1,3 +1,3 @@
-## Язык
+## Language
 
-Отвечай на русском. Комментарии в коде — на английском. Документация (`docs/`, README, PR description) — на русском.
+Reply in Russian. Code comments — in English. Documentation (`docs/`, README, PR description) — in Russian.

@@ -1,91 +1,92 @@
-## Phase handoff discipline (железное правило)
+## Phase handoff discipline (iron rule)
 
-Между фазами plan'а (§8 плана) всегда **explicit reassign** на конкретного агента следующей фазы. Никогда не оставляй issue в состоянии "никому не назначена, разберутся".
+Between plan phases (§8), always **explicit reassign** to the next-phase agent. Never leave an issue "unassigned, someone will pick up".
 
-Grounded in GIM-48 incident (2026-04-18): CodeReviewer после Phase 3.1 APPROVE сделал `status=todo` вместо `assignee=QAEngineer`; CTO увидел `todo` и закрыл через `done` без Phase 4.1 evidence; merged код крэшнулся на iMac. Гейт QA был пропущен **потому что никто не передал ownership**.
+Grounded in GIM-48 (2026-04-18): CodeReviewer set `status=todo` after Phase 3.1 APPROVE instead of `assignee=QAEngineer`; CTO saw `todo` and closed via `done` without Phase 4.1 evidence; merged code crashed on iMac. QA gate was skipped **because no one transferred ownership**.
 
-### Обязательные правила handoff'а между фазами
+### Handoff matrix
 
-| Фаза закончена | Следующая фаза | Handoff обязателен |
-|----------------|-----------------|---------------------|
-| 1.1 Формализация (CTO) | 1.2 Plan-first review | `assignee=CodeReviewer` + @CodeReviewer |
+| Phase done | Next phase | Required handoff |
+|---|---|---|
+| 1.1 Formalization (CTO) | 1.2 Plan-first review | `assignee=CodeReviewer` + @CodeReviewer |
 | 1.2 Plan-first (CR) | 2.x Implementation | `assignee=<implementer>` + @mention |
-| 2 Implementation | 3.1 Mechanical review | `assignee=CodeReviewer` + @mention + **git push сделан** |
+| 2 Implementation | 3.1 Mechanical review | `assignee=CodeReviewer` + @mention + **git push done** |
 | 3.1 CR APPROVE | 3.2 Opus adversarial | `assignee=OpusArchitectReviewer` + @mention |
 | 3.2 Opus APPROVE | 4.1 QA live smoke | `assignee=QAEngineer` + @mention |
-| 4.1 QA PASS | 4.2 Merge | `assignee=<merger>` (обычно CTO) + @mention |
+| 4.1 QA PASS | 4.2 Merge | `assignee=<merger>` (usually CTO) + @mention |
 
-### НИКОГДА не делай
+### NEVER
 
-- `status=todo` между фазами. `todo` = "никем не назначена, доступна для claim". Между фазами должен быть **explicit assignee** следующей фазы.
-- `release` execution lock без одновременного `PATCH assignee=<next-phase-agent>`. Просто release → issue зависает без владельца.
-- "Assignee текущий (я), status=in_progress" после завершения моей фазы. Assignee должен смениться до того, как я пишу handoff-comment.
-- Закрытие `status=done` без проверки что Phase 4.1 evidence-comment опубликован **от правильного агента** (QAEngineer, не implementer и не CR).
+- `status=todo` between phases. `todo` = "unassigned, free to claim" — phases require **explicit assignee**.
+- `release` execution lock without simultaneous `PATCH assignee=<next-phase-agent>` — issue hangs ownerless.
+- Keeping `assignee=me, status=in_progress` after my phase ends. Reassign before writing the handoff comment.
+- `status=done` without verifying Phase 4.1 evidence-comment exists **from the right agent** (QAEngineer, not implementer or CR).
 
-### Формат handoff-комментария
+### Handoff comment format
 
 ```
-## Phase N.M complete — [краткий результат]
+## Phase N.M complete — [brief result]
 
-[Evidence / артефакты / commits / links]
+[Evidence / artifacts / commits / links]
 
-@<NextAgent> твой ход — Phase <N.M+1>: [что нужно сделать]
+@<NextAgent> your turn — Phase <N.M+1>: [what to do]
 ```
 
-`@` обязательно **с пробелом** после имени (см. `heartbeat-discipline.md` §«@-упоминания»). Именно @-mention гарантирует wake следующего агента, даже если assignee уже выставлен.
+See `heartbeat-discipline.md` §@-mentions for the parser rule. Mention wakes the next agent even if assignee is set.
 
 ### Pre-handoff checklist (implementer → reviewer)
 
-Перед тем как писать "Phase 2 complete — @CodeReviewer":
+Before writing "Phase 2 complete — @CodeReviewer":
 
-- [ ] `git push origin <feature-branch>` выполнен — коммиты доступны на origin
-- [ ] Локально зелёный `uv run ruff check && uv run mypy src/ && uv run pytest` (или язык-эквивалент)
-- [ ] CI на feature branch запущен — или будет запущен автоматически пушем
-- [ ] PR открыт, либо PR будет открыт на Phase 4.2 (зависит от plan §8)
-- [ ] В handoff-comment **конкретные commit SHAs** и ссылка на ветку, не просто "готово"
+- [ ] `git push origin <feature-branch>` done — commits live on origin
+- [ ] Local green: `uv run ruff check && uv run mypy src/ && uv run pytest` (or language equivalent)
+- [ ] CI on feature branch running (or auto-triggered by push)
+- [ ] PR open, or will open at Phase 4.2 (per plan §8)
+- [ ] Handoff comment includes **concrete commit SHAs** and branch link, not just "done"
 
-Пропуск любого пункта = CR получает "готово" на коде которого нет на origin = тупик.
+Skip any → CR gets "done" on code not on origin → dead end.
 
 ### Pre-close checklist (CTO → status=done)
 
-Перед `PATCH status=done`:
+- [ ] Phase 4.2 merge done (squash-commit on develop / main)
+- [ ] Phase 4.1 evidence-comment **exists** and authored by **QAEngineer** (verify `authorAgentId` in activity log / UI)
+- [ ] Evidence contains: commit SHA, runtime smoke (healthcheck / tool call), plan-specific invariant check (e.g. `MATCH ... RETURN DISTINCT n.group_id`)
+- [ ] CI green on merge commit (or admin override documented in merge message with reason)
+- [ ] iMac container rebuilt+restarted post-merge (merge ≠ auto-deploy; see `post_merge_deploy_gap`)
 
-- [ ] Phase 4.2 merge уже выполнен (squash-commit на develop / main)
-- [ ] Phase 4.1 evidence-comment **существует** и написан **QAEngineer'ом** (проверь `authorAgentId` в activity log или в UI)
-- [ ] Evidence содержит: commit SHA, runtime-смок (healthcheck / tool call), plan-specific invariant check (например `MATCH ... RETURN DISTINCT n.group_id`)
-- [ ] CI green на merge-коммите (или admin-override задокументирован в merge message с причиной)
+Any item missing → **don't close**. Escalate to Board (`@Board evidence missing on Phase 4.1 before close`).
 
-Если хотя бы один пункт не выполнен — **не закрывай**. Эскалируй к Board (`@Board evidence missing на Phase 4.1 перед close`).
+### Phase 4.1 QA-evidence comment format
 
-### Формат Phase 4.1 QA-evidence комментария
-
-Эталон (из GIM-52 Phase 4.1 PASS):
+Reference (GIM-52 Phase 4.1 PASS):
 
 ```
 ## Phase 4.1 — QA PASS ✅
 
 ### Evidence
 
-1. Commit SHA tested: `<git rev-parse HEAD на feature branch>`
-2. `docker compose --profile <x> ps` — [контейнеры healthy]
-3. `/healthz` — `{"status":"ok","neo4j":"reachable"}` (или эквивалент для другого сервиса)
-4. MCP tool: `palace.memory.<tool>()` → [вывод] (реальный MCP call, не только healthz)
-5. Ingest CLI / runtime-смок — [вывод команды]
-6. Direct invariant check (plan-specific) — [например `MATCH (n) RETURN DISTINCT n.group_id` с ожидаемой 1 строкой]
-7. После QA — checkout обратно на `develop` на iMac (cм. `feedback_imac_checkout_discipline.md`)
+1. Commit SHA tested: `<git rev-parse HEAD on feature branch>`
+2. `docker compose --profile <x> ps` — [containers healthy]
+3. `/healthz` — `{"status":"ok","neo4j":"reachable"}` (or service equivalent)
+4. MCP tool: `palace.memory.<tool>()` → [output] (real MCP call, not just healthz)
+5. Ingest CLI / runtime smoke — [command output]
+6. Direct invariant check (plan-specific) — e.g. `MATCH (n) RETURN DISTINCT n.group_id`, expected 1 row
+7. After QA — checkout back to `develop` on iMac (see `feedback_imac_checkout_discipline.md`)
 
-@<merger> Phase 4.1 green, передаю на Phase 4.2 — squash-merge к develop.
+@<merger> Phase 4.1 green, handing to Phase 4.2 — squash-merge to develop.
 ```
 
-Замена `/healthz`-only evidence на реальный tool-call — критично. `/healthz` может быть зелёным при fundamentally-broken функциональности (GIM-48).
+Replacing `/healthz`-only evidence with a real tool-call is critical. `/healthz` can be green while functionality is fundamentally broken (GIM-48). Mocked-DB pytest output does NOT count — real runtime smoke required (GIM-48 lesson).
 
 ### Lock stale edge case
 
-Если `POST /release` возвращает 200 но `executionAgentNameKey` не сбрасывается (GIM-52 Phase 4.1 reported by OpusArchitectReviewer) — **не игнорируй**, эскалируй Board с details (issue id, run id, последовательность попыток). Это либо bug в paperclip, либо endpoint rename — Board разберёт.
+If `POST /release` returns 200 but `executionAgentNameKey` doesn't reset (GIM-52 Phase 4.1, reported by OpusArchitectReviewer) — **don't ignore**, escalate to Board with details (issue id, run id, attempt sequence). Either paperclip bug or endpoint rename — Board decides.
 
-### Самопроверка перед handoff
+Observed workaround (GIM-52, GIM-53): `PATCH assignee=me` → `POST /release` → `PATCH assignee=<next>` clears it. Escalate only if that fails twice.
 
-- "Я написал @NextAgent с пробелом после имени?" — да/нет
-- "Assignee сейчас — следующий агент или всё ещё я?" — должен быть next
-- "Мой push виден в `git ls-remote origin <branch>`?" — обязан быть yes для implementer handoff
-- "Evidence в моём комментарии — от меня или я пересказал чужую работу?" — для QA только собственный evidence засчитывается
+### Self-check before handoff
+
+- "Did I write @NextAgent with trailing space?" — yes/no
+- "Is current assignee the next agent or still me?" — must be next
+- "Is my push visible in `git ls-remote origin <branch>`?" — must be yes for implementer handoff
+- "Is the evidence in my comment mine, or did I retell someone else's work?" — for QA, only own evidence counts

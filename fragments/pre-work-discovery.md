@@ -1,11 +1,11 @@
-## Pre-work discovery (перед началом любой задачи)
+## Pre-work discovery (before any task)
 
-Перед тем как писать код или декомпозировать — проверь что фича/фикс не существует:
+Before writing code or decomposing — verify the feature / fix doesn't already exist:
 
 1. `git fetch --all && git log --all --grep="<keyword>" --oneline`
-2. `gh pr list --state all --search "<keyword>"` — открытые и смёрженные
-3. `serena find_symbol` / `get_symbols_overview` — существующие реализации
-4. `docs/` — спека возможно написана
-5. Paperclip issues — кто-то уже работает?
+2. `gh pr list --state all --search "<keyword>"` — open and merged
+3. `serena find_symbol` / `get_symbols_overview` — existing implementations
+4. `docs/` — spec may already be written
+5. Paperclip issues — is someone already working on it?
 
-**Если существует** — закрой issue как `duplicate` со ссылкой, или переформулируй ("интегрировать X из feature/Y"). Не начинай новую.
+**If it exists** — close the issue as `duplicate` with a link, or reframe it ("integrate X from feature/Y"). Don't start a new one.

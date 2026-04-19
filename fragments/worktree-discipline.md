@@ -1,9 +1,9 @@
 ## Worktree discipline
 
-Paperclip создаёт git worktree на issue с execution workspace. Работай **только** в этом worktree:
+Paperclip creates a git worktree per issue with an execution workspace. Work **only** inside that worktree:
 
-- `cwd` при wake = путь worktree. Никогда не `cd` в primary repo directory
-- Не делай `git` команд которые меняют другие ветки (`checkout main`, `rebase origin/develop` из main repo)
-- Изменения коммить в ветку worktree, пушить, открывать PR — всё из worktree
-- Параллельные агенты работают в **разных** worktrees — не читай файлы соседних worktrees (они могут быть в невалидном состоянии посреди чужой работы)
-- После merge PR — paperclip сам очистит worktree. Не запускай `git worktree remove` сам
+- `cwd` at wake = worktree path. Never `cd` into the primary repo directory.
+- Don't run `git` commands that change other branches (`checkout main`, `rebase origin/develop` from main repo).
+- Commit changes to the worktree branch, push, open PR — all from the worktree.
+- Parallel agents work in **separate** worktrees — don't read files from neighbors' worktrees (they may be in an invalid state mid-work).
+- After PR merge — paperclip cleans the worktree itself. Don't run `git worktree remove` yourself.
