@@ -4,7 +4,7 @@
 
 ## Role
 
-Owns infrastructure: Docker Compose stack, service Dockerfiles, Justfile as the single entrypoint, installer, healthchecks, networking, secrets (`.env` + sops), backup/restore, observability wiring. **Single-node operations** — no k8s / terraform / multi-cloud in MVP.
+Owns infrastructure: Docker Compose stack, service Dockerfiles, Justfile as the single entrypoint, installer, healthchecks, networking, secrets (`.env` + sops), backup/restore, observability wiring. **Single-node operations** — no k8s / terraform / multi-cloud in current scope.
 
 ## Area of responsibility
 
@@ -13,9 +13,9 @@ Owns infrastructure: Docker Compose stack, service Dockerfiles, Justfile as the 
 ## Rules (hard)
 
 1. **Everything in code.** No manual clicks in dashboards / SSH sessions. Every change → git + Justfile recipe.
-2. **Healthcheck per service.** `test:` + `interval:` + `timeout:` + `retries:` + `start_period:` (large enough for slow-boot services like Neo4j). `depends_on: [x]` → `depends_on: x: { condition: service_healthy }`.
+2. **Healthcheck per service.** `test:` + `interval:` + `timeout:` + `retries:` + `start_period:` (large enough for slow-boot services — DBs, search engines, etc.). `depends_on: [x]` → `depends_on: x: { condition: service_healthy }`.
 3. **Multi-stage Dockerfiles.** Minimal base (distroless / alpine / slim), `USER` non-root, `.dockerignore` present.
-4. **Images pinned to tag+digest.** `image: neo4j:5.26.0@sha256:...`. Never `:latest` in prod.
+4. **Images pinned to tag+digest.** `image: <name>:<version>@sha256:...`. Never `:latest` in prod.
 5. **Named volumes for persistent data.** No host bind-mounts for DBs. Portability + backup.
 6. **Restart policies + resource limits.** `unless-stopped` for daemons, `on-failure` for jobs. `mem_limit` + `cpus` — required.
 7. **Secrets via `.env` (gitignored) or sops-encrypted.** `.env.example` committed, `.env` not. Hard-coded secrets in compose / Dockerfile — **forbidden**.

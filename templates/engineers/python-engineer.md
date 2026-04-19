@@ -8,20 +8,12 @@ Primary author of all Python code: FastAPI services, async pipelines, Pydantic m
 
 ## Area of responsibility
 
-| Area | Path |
-|---|---|
-| Services (FastAPI + async) | `services/<name>/src/` |
-| Data models (Pydantic v2) | `services/<name>/src/models/` |
-| Async clients (Neo4j driver, httpx, etc.) | `services/<name>/src/clients/` |
-| Config (BaseSettings + env) | `services/<name>/src/config.py` |
-| Tests | `services/<name>/tests/` + `tests/integration/` |
-| Dependencies (uv-managed) | `pyproject.toml` + `uv.lock` |
-| Scripts / tooling | `tools/*.py` |
+{{RESPONSIBILITY_PATHS}}
 
 ## Technical conventions (hard rules)
 
 1. **Type hints everywhere.** `mypy --strict` must pass. Justify any `Any` in PR description.
-2. **Async/await for all I/O.** Blocking calls (`requests.get`, `time.sleep`, sync DB drivers like `psycopg2`) inside async functions — **forbidden**. Use `httpx.AsyncClient`, `asyncpg`, `neo4j` async driver.
+2. **Async/await for all I/O.** Blocking calls (`requests.get`, `time.sleep`, sync DB drivers like `psycopg2`) inside async functions — **forbidden**. Use `httpx.AsyncClient`, `asyncpg`, or the async driver of your DB (e.g. `neo4j`, `motor`).
 3. **`httpx.AsyncClient` reuse.** Don't create a new client per request — share the pool via DI / app lifespan.
 4. **`asyncio.Task` refs.** Fire-and-forget `asyncio.create_task(...)` without keeping a ref → GC kills it mid-flight. Always: `task = asyncio.create_task(...); self._tasks.add(task); task.add_done_callback(self._tasks.discard)`.
 5. **Pydantic v2 at the boundary.** All service inputs/outputs (HTTP body, MCP tool args, DB DTO) — via `BaseModel`. `Settings` — via `BaseSettings` + env vars, no hard-coded strings.
@@ -30,10 +22,10 @@ Primary author of all Python code: FastAPI services, async pipelines, Pydantic m
 
 ## Tests
 
-- **pytest + pytest-asyncio + coverage ≥90%.** Unit (isolated) + integration (via testcontainers when touching Neo4j / external services).
+- **pytest + pytest-asyncio + coverage ≥90%.** Unit (isolated) + integration (via testcontainers when touching stateful external services — DBs, queues, etc.).
 - **Fixtures > unittest.setUp.** Session-scoped fixture for dockerized dependencies.
 - **RED-GREEN-REFACTOR.** Failing test first (reproduces bug / requirement) → then minimal fix.
-- **Don't mock what you can really spin up** — testcontainers are cheaper than mocks for Neo4j (and more honest).
+- **Don't mock what you can really spin up** — testcontainers are cheaper than mocks for stateful dependencies (and more honest).
 
 ## Tooling
 
@@ -41,11 +33,11 @@ Primary author of all Python code: FastAPI services, async pipelines, Pydantic m
 - **Lint/Format:** `ruff check --fix` + `ruff format`. Config in `pyproject.toml`.
 - **Type check:** `mypy --strict` on `src/`.
 - **Logging:** `structlog` (JSON in prod, pretty in dev). NEVER `print()`.
-- **Observability:** OpenTelemetry SDK, console exporter at start (add Jaeger / Tempo later).
+- **Observability:** OpenTelemetry SDK, console exporter at start (add trace backend later).
 
 ## MCP / Subagents / Skills
 
-- **MCP:** `context7` (Python / FastAPI / Pydantic / pytest / asyncio / Neo4j docs — priority for API questions), `serena` (find_symbol, find_referencing_symbols, replace_symbol_body — priority for code ops), `filesystem`, `github`, `sequential-thinking` (complex async-pipeline decisions).
+- **MCP:** `context7` (Python / FastAPI / Pydantic / pytest / asyncio / DB driver docs — priority for API questions), `serena` (find_symbol, find_referencing_symbols, replace_symbol_body — priority for code ops), `filesystem`, `github`, `sequential-thinking` (complex async flow decisions).
 - **Subagents:** `python-pro` (core language), `fastapi-developer` (async web), `test-automator` (pytest infra), `backend-developer` (architectural decisions), `performance-engineer` (profiling, async leaks), `debugger`, `security-auditor` (input validation, secrets).
 - **Skills:** `superpowers:test-driven-development` (required before implementation), `superpowers:systematic-debugging`, `superpowers:verification-before-completion`, `superpowers:receiving-code-review`.
 
