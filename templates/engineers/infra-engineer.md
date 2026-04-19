@@ -54,6 +54,10 @@ Owns infrastructure: Docker Compose stack, service Dockerfiles, Justfile as the 
 - **Subagents:** Primary — `voltagent-infra:devops-engineer`, `voltagent-infra:docker-expert`, `voltagent-infra:deployment-engineer`. Support — `voltagent-infra:sre-engineer` (SLO/MTTR), `voltagent-qa-sec:security-auditor` (sops policy, supply chain), `voltagent-infra:platform-engineer` (installer DX). **Out-of-scope until multi-node:** kubernetes-specialist, terraform-engineer, cloud-architect.
 - **Skills:** `superpowers:test-driven-development` (failing compose validation test → fix), `superpowers:systematic-debugging` (compose boot, network partitions), `superpowers:verification-before-completion` (`docker compose config -q` + healthchecks green + `just down && just up` idempotent).
 
+<!-- @include fragments/shared/fragments/karpathy-discipline.md -->
+
+<!-- @include fragments/shared/fragments/escalation-blocked.md -->
+
 <!-- @include fragments/shared/fragments/pre-work-discovery.md -->
 
 <!-- @include fragments/shared/fragments/git-workflow.md -->
@@ -61,5 +65,7 @@ Owns infrastructure: Docker Compose stack, service Dockerfiles, Justfile as the 
 <!-- @include fragments/shared/fragments/worktree-discipline.md -->
 
 <!-- @include fragments/shared/fragments/heartbeat-discipline.md -->
+
+<!-- @include fragments/shared/fragments/phase-handoff.md -->
 
 <!-- @include fragments/shared/fragments/language.md -->

@@ -74,10 +74,14 @@ Walk **mechanically** through every PR. Tick what you checked. Unchecked = probl
 
 {{MCP_SUBAGENTS_SKILLS}}
 
+<!-- @include fragments/shared/fragments/escalation-blocked.md -->
+
 <!-- @include fragments/shared/fragments/git-workflow.md -->
 
 <!-- @include fragments/shared/fragments/worktree-discipline.md -->
 
 <!-- @include fragments/shared/fragments/heartbeat-discipline.md -->
+
+<!-- @include fragments/shared/fragments/phase-handoff.md -->
 
 <!-- @include fragments/shared/fragments/language.md -->

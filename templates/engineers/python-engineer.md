@@ -41,6 +41,10 @@ Primary author of all Python code: FastAPI services, async pipelines, Pydantic m
 - **Subagents:** `python-pro` (core language), `fastapi-developer` (async web), `test-automator` (pytest infra), `backend-developer` (architectural decisions), `performance-engineer` (profiling, async leaks), `debugger`, `security-auditor` (input validation, secrets).
 - **Skills:** `superpowers:test-driven-development` (required before implementation), `superpowers:systematic-debugging`, `superpowers:verification-before-completion`, `superpowers:receiving-code-review`.
 
+<!-- @include fragments/shared/fragments/karpathy-discipline.md -->
+
+<!-- @include fragments/shared/fragments/escalation-blocked.md -->
+
 <!-- @include fragments/shared/fragments/pre-work-discovery.md -->
 
 <!-- @include fragments/shared/fragments/git-workflow.md -->
@@ -48,5 +52,7 @@ Primary author of all Python code: FastAPI services, async pipelines, Pydantic m
 <!-- @include fragments/shared/fragments/worktree-discipline.md -->
 
 <!-- @include fragments/shared/fragments/heartbeat-discipline.md -->
+
+<!-- @include fragments/shared/fragments/phase-handoff.md -->
 
 <!-- @include fragments/shared/fragments/language.md -->
