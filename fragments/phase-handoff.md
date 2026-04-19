@@ -8,7 +8,7 @@ Grounded in GIM-48 (2026-04-18): CodeReviewer set `status=todo` after Phase 3.1 
 
 | Phase done | Next phase | Required handoff |
 |---|---|---|
-| 1.1 Formalization (CTO) | 1.2 Plan-first review | `assignee=CodeReviewer` + @CodeReviewer |
+| 1.1 Formalization (CTO) | 1.2 Plan-first review | CTO does `git mv` / rename / `GIM-57` swap **on the feature branch directly** (no sub-issue), pushes, then `assignee=CodeReviewer` + @CodeReviewer. Sub-issues for Phase 1.1 mechanical work are anti-pattern per the narrowed `cto-no-code-ban.md` scope. |
 | 1.2 Plan-first (CR) | 2.x Implementation | `assignee=<implementer>` + @mention |
 | 2 Implementation | 3.1 Mechanical review | `assignee=CodeReviewer` + @mention + **git push done** |
 | 3.1 CR APPROVE | 3.2 Opus adversarial | `assignee=OpusArchitectReviewer` + @mention |
