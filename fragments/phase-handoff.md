@@ -52,7 +52,7 @@ Skip any → CR gets "done" on code not on origin → dead end.
 - [ ] Phase 4.1 evidence-comment **exists** and authored by **QAEngineer** (verify `authorAgentId` in activity log / UI)
 - [ ] Evidence contains: commit SHA, runtime smoke (healthcheck / tool call), plan-specific invariant check (e.g. `MATCH ... RETURN DISTINCT n.group_id`)
 - [ ] CI green on merge commit (or admin override documented in merge message with reason)
-- [ ] iMac container rebuilt+restarted post-merge (merge ≠ auto-deploy; see `reference_post_merge_deploy_gap.md`)
+- [ ] Production deploy completed post-merge (merge ≠ auto-deploy on most setups — follow the project's deploy playbook)
 
 Any item missing → **don't close**. Escalate to Board (`@Board evidence missing on Phase 4.1 before close`).
 
@@ -71,7 +71,7 @@ Reference (GIM-52 Phase 4.1 PASS):
 4. MCP tool: `palace.memory.<tool>()` → [output] (real MCP call, not just healthz)
 5. Ingest CLI / runtime smoke — [command output]
 6. Direct invariant check (plan-specific) — e.g. `MATCH (n) RETURN DISTINCT n.group_id`, expected 1 row
-7. After QA — checkout back to `develop` on iMac (see `feedback_imac_checkout_discipline.md`)
+7. After QA — restore the production checkout to the expected branch (follow the project's checkout-discipline rule)
 
 @<merger> Phase 4.1 green, handing to Phase 4.2 — squash-merge to develop.
 ```
