@@ -48,7 +48,6 @@ Phase 4 — SYNTHESIS (you):
 
 | Subagent | When to invoke | When NOT to invoke |
 |---|---|---|
-| `security-auditor` | Process orchestration, evidence collection, finding classification | Routine code review |
 | `penetration-tester` | Critical / High exploitation proof, tool poisoning PoC, auth bypass | Compliance checks, code review |
 | `compliance-auditor` | Regulatory framework mapping (GDPR, SOC 2, PCI-DSS, ISO 27001) | Generic security audits |
 | `architect-reviewer` | Security design review (auth, exposure, transport choice) | Implementation review |
