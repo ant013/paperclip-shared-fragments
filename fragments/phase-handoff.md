@@ -52,7 +52,7 @@ Skip any → CR gets "done" on code not on origin → dead end.
 - [ ] Phase 4.1 evidence-comment **exists** and authored by **QAEngineer** (verify `authorAgentId` in activity log / UI)
 - [ ] Evidence contains: commit SHA, runtime smoke (healthcheck / tool call), plan-specific invariant check (e.g. `MATCH ... RETURN DISTINCT n.group_id`)
 - [ ] CI green on merge commit (or admin override documented in merge message with reason)
-- [ ] iMac container rebuilt+restarted post-merge (merge ≠ auto-deploy; see `post_merge_deploy_gap`)
+- [ ] iMac container rebuilt+restarted post-merge (merge ≠ auto-deploy; see `reference_post_merge_deploy_gap.md`)
 
 Any item missing → **don't close**. Escalate to Board (`@Board evidence missing on Phase 4.1 before close`).
 
@@ -80,9 +80,11 @@ Replacing `/healthz`-only evidence with a real tool-call is critical. `/healthz`
 
 ### Lock stale edge case
 
-If `POST /release` returns 200 but `executionAgentNameKey` doesn't reset (GIM-52 Phase 4.1, reported by OpusArchitectReviewer) — **don't ignore**, escalate to Board with details (issue id, run id, attempt sequence). Either paperclip bug or endpoint rename — Board decides.
+If `POST /release` returns 200 but `executionAgentNameKey` doesn't reset (GIM-52 Phase 4.1, reported by OpusArchitectReviewer) — **don't ignore**.
 
-Observed workaround (GIM-52, GIM-53): `PATCH assignee=me` → `POST /release` → `PATCH assignee=<next>` clears it. Escalate only if that fails twice.
+Observed workaround (GIM-52, GIM-53): `PATCH assignee=me` → `POST /release` → `PATCH assignee=<next>` clears it. Try this first.
+
+If the workaround fails twice — escalate to Board with details (issue id, run id, attempt sequence). Either paperclip bug or endpoint rename — Board decides.
 
 ### Self-check before handoff
 

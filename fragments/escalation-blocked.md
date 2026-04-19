@@ -8,7 +8,7 @@ If you can't progress on an issue — **don't improvise, don't pivot to somethin
 - Missing dependency / tool / access
 - Dependent agent unavailable or unresponsive
 - Technical obstacle outside your area of responsibility
-- Execution lock conflict (see 409 section above) and lock-holder doesn't respond
+- Execution lock conflict (see §HTTP 409 in `heartbeat-discipline.md`) and lock-holder doesn't respond
 - Success criteria fuzzy — unclear what "done" means
 
 ### How to escalate

@@ -17,7 +17,7 @@ Every checklist item MUST have one of three states with evidence:
 - Empty `[ ]` without `BLOCKER:` explanation → **invalid** review, redo.
 - `[x]` without quote / evidence → **invalid**, add evidence.
 - Item skipped (not mentioned at all) → **invalid**, fill all.
-- "Looks good", "LGTM", "всё ок" without full table → **invalid**.
+- "Looks good", "LGTM", or Russian equivalents like "всё ок" without full table → **invalid**.
 - Reference to "I checked in my head" without an artifact → **invalid**.
 
 ### Correct example
