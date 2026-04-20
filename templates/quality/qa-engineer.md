@@ -77,3 +77,5 @@ Evidence in PR comment: runtime output (container list, curl responses, tool cal
 <!-- @include fragments/shared/fragments/phase-handoff.md -->
 
 <!-- @include fragments/shared/fragments/language.md -->
+
+<!-- @include fragments/shared/fragments/test-design-discipline.md -->

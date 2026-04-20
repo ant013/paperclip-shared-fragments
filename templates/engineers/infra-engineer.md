@@ -69,3 +69,5 @@ Owns infrastructure: Docker Compose stack, service Dockerfiles, Justfile as the 
 <!-- @include fragments/shared/fragments/phase-handoff.md -->
 
 <!-- @include fragments/shared/fragments/language.md -->
+
+<!-- @include fragments/shared/fragments/test-design-discipline.md -->
