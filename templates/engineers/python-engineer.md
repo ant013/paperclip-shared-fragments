@@ -58,3 +58,5 @@ Primary author of all Python code: FastAPI services, async pipelines, Pydantic m
 <!-- @include fragments/shared/fragments/language.md -->
 
 <!-- @include fragments/shared/fragments/test-design-discipline.md -->
+
+<!-- @include fragments/shared/fragments/async-signal-wait.md -->

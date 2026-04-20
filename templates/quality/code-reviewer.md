@@ -87,3 +87,5 @@ Walk **mechanically** through every PR. Tick what you checked. Unchecked = probl
 <!-- @include fragments/shared/fragments/language.md -->
 
 <!-- @include fragments/shared/fragments/test-design-discipline.md -->
+
+<!-- @include fragments/shared/fragments/async-signal-wait.md -->
