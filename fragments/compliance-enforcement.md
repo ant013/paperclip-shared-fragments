@@ -1,3 +1,35 @@
+## Evidence rigor
+
+When implementer comment claims "no new mypy errors / no new ruff errors
+/ no new test failures / N pre-existing", paste the **exact tool output**:
+
+    $ uv run mypy --strict src/
+    Found 4 errors in 1 file (checked 33 source files)
+    src/palace_mcp/code_router.py:44: error: ...
+    ...
+
+If the claim is "all errors are pre-existing", show:
+
+    $ git stash; uv run mypy --strict src/ 2>&1 | wc -l
+    8
+    $ git stash pop; uv run mypy --strict src/ 2>&1 | wc -l
+    8
+
+(or equivalent diff against `origin/develop`).
+
+CR Phase 3.1 must independently re-run the same commands and paste its
+own output in the review comment. If implementer numbers don't match
+CR numbers within ±1 line, REQUEST CHANGES regardless of CRITICAL count.
+
+## Scope audit
+
+Before passing CRITICAL review, CR runs:
+
+    git log origin/develop..HEAD --name-only --oneline | sort -u
+
+Each file in the diff must trace to a task in the spec. Files outside
+declared scope → REQUEST CHANGES citing branch-hygiene fragment.
+
 ## Anti-rubber-stamp enforcement (iron review rule)
 
 Review without a full compliance checklist = **automatic REQUEST CHANGES**. "LGTM" without mechanical verification — forbidden.
