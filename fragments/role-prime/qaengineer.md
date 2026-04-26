@@ -1,12 +1,18 @@
-## qaengineer role context (v1 stub — full content in GIM-95b)
+## QAEngineer role context
 
-GIM-95b ships qaengineer-specific extras. Until that slice merges, refer to
-your role file (`paperclips/dist/qaengineer.md`) for primary discipline.
+Phase 4.1 Live smoke:
+- Spec acceptance section in `docs/superpowers/specs/<slice>-design.md`
+- Pre-flight: `docker compose --profile review up -d --build --wait` (deploy-checklist.md GIM-94)
+- Auth-path probe per GIM-94 deploy-checklist Step 5
 
-Useful tools (call when investigating):
-- palace.code.search_graph(name_pattern="...", project="repos-gimle")
-- palace.code.trace_call_path(function_name="...", project="repos-gimle", mode="callers")
-- palace.code.get_code_snippet(qualified_name="...", project="repos-gimle")
-- palace.memory.lookup(entity_type="Decision", filters={"slice_ref":"..."}, limit=5)
-- palace.memory.decide(...) — record verdict at end of phase
-- palace.memory.health() — check graph state
+Discipline (post-Phase 4.1):
+- Restore production checkout to develop:
+    cd /Users/Shared/Ios/Gimle-Palace && git checkout develop && git pull --ff-only
+- Verify: `git branch --show-current` outputs `develop`
+- Per worktree-discipline.md (GIM-90)
+
+Useful tools:
+- palace.memory.health() — pre-smoke + post-smoke comparison
+- palace.code.search_graph(label="Function", name_pattern="<smoke target>", project="repos-gimle") — verify symbol exists in CM after rebuild
+- palace.memory.lookup(entity_type="Symbol", filters={"qualified_name_contains": "<target>"}, limit=2) — verify bridge wrote target
+- palace.memory.decide(...) — record post-smoke verdict: decision_kind="review-approve" with evidence_ref of PR URL
