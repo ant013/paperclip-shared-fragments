@@ -1,0 +1,291 @@
+{
+  "version": 1,
+  "purpose": "Codex runtime parity map for duplicate Paperclip agent teams. Claude target behavior is preserved; Codex target adds analogs or documents gaps.",
+  "codex_runtime": {
+    "model": "gpt-5.5",
+    "reasoning": "high",
+    "mcp_confirmed": [
+      "codebase-memory",
+      "context7",
+      "playwright",
+      "serena"
+    ],
+    "agents_confirmed": [
+      "architect-reviewer",
+      "backend-developer",
+      "blockchain-developer",
+      "code-reviewer",
+      "debugger",
+      "devops-engineer",
+      "docker-expert",
+      "documentation-engineer",
+      "error-detective",
+      "frontend-design",
+      "kotlin-specialist",
+      "mcp-developer",
+      "mobile-developer",
+      "multi-agent-coordinator",
+      "platform-engineer",
+      "postgres-pro",
+      "python-pro",
+      "qa-expert",
+      "research-analyst",
+      "reviewer",
+      "search-specialist",
+      "security-auditor",
+      "security-engineer",
+      "sql-pro",
+      "swift-pro",
+      "technical-writer",
+      "test-automator",
+      "typescript-pro",
+      "ui-designer",
+      "ux-researcher",
+      "workflow-orchestrator"
+    ],
+    "skills_confirmed": [
+      "create-plan",
+      "frontend-design",
+      "frontend-skill",
+      "gh-address-comments",
+      "gh-fix-ci",
+      "mcp-builder",
+      "openai-docs",
+      "swift-pro",
+      "webapp-testing"
+    ]
+  },
+  "concepts": [
+    {
+      "claude": "CLAUDE.md project rules",
+      "codex": "AGENTS.md project rules",
+      "status": "confirmed",
+      "requires": {},
+      "notes": "Codex supports global and project AGENTS.md instructions."
+    },
+    {
+      "claude": "context7 MCP",
+      "codex": "context7 MCP",
+      "status": "confirmed",
+      "requires": {
+        "mcp": ["context7"]
+      },
+      "notes": "Configured in Codex config.toml."
+    },
+    {
+      "claude": "serena MCP",
+      "codex": "serena MCP",
+      "status": "confirmed",
+      "requires": {
+        "mcp": ["serena"]
+      },
+      "notes": "Configured in Codex config.toml."
+    },
+    {
+      "claude": "filesystem MCP",
+      "codex": "native filesystem and shell access",
+      "status": "instruction_equivalent",
+      "requires": {},
+      "notes": "Do not require filesystem MCP unless a Paperclip runtime path needs MCP-only file access."
+    },
+    {
+      "claude": "github MCP",
+      "codex": "gh CLI plus GitHub Codex skills",
+      "status": "partial",
+      "requires": {
+        "skills": ["gh-address-comments", "gh-fix-ci"]
+      },
+      "notes": "Generic GitHub MCP is not configured."
+    },
+    {
+      "claude": "sequential-thinking MCP",
+      "codex": "Codex reasoning plus explicit plan/checklist discipline",
+      "status": "instruction_equivalent",
+      "requires": {},
+      "notes": "No tool-equivalent required unless traces are needed."
+    },
+    {
+      "claude": "superpowers:writing-plans",
+      "codex": "create-plan skill",
+      "status": "confirmed",
+      "requires": {
+        "skills": ["create-plan"]
+      },
+      "notes": "Installed from Composio awesome-codex-skills."
+    },
+    {
+      "claude": "superpowers:test-driven-development",
+      "codex": "explicit TDD discipline block or future Codex skill",
+      "status": "partial",
+      "requires": {},
+      "notes": "No direct installed Codex skill yet."
+    },
+    {
+      "claude": "superpowers:systematic-debugging",
+      "codex": "debugger agent plus explicit debugging discipline",
+      "status": "partial",
+      "requires": {
+        "agents": ["debugger"]
+      },
+      "notes": "Skill-level trigger is missing."
+    },
+    {
+      "claude": "superpowers:verification-before-completion",
+      "codex": "global verification discipline plus role-specific evidence rules",
+      "status": "partial",
+      "requires": {},
+      "notes": "Behavior can be preserved by instructions."
+    },
+    {
+      "claude": "pr-review-toolkit:*",
+      "codex": "reviewer agents plus GitHub skills",
+      "status": "partial",
+      "requires": {
+        "agents": ["code-reviewer", "reviewer"],
+        "skills": ["gh-address-comments", "gh-fix-ci"]
+      },
+      "notes": "No direct toolkit skill installed."
+    },
+    {
+      "claude": "claude-api skill",
+      "codex": "gap or external Anthropic SDK docs lookup",
+      "status": "gap",
+      "requires": {},
+      "notes": "Do not remove from Claude target; Codex target needs separate decision."
+    },
+    {
+      "claude": "supabase MCP",
+      "codex": "gap",
+      "status": "gap",
+      "requires": {},
+      "notes": "Required for Medic roles if direct Supabase tool access remains expected."
+    },
+    {
+      "claude": "tavily MCP",
+      "codex": "gap",
+      "status": "gap",
+      "requires": {},
+      "notes": "Required for live web search workflows if web.run is not available in Paperclip Codex runtime."
+    },
+    {
+      "claude": "figma MCP",
+      "codex": "gap",
+      "status": "gap",
+      "requires": {},
+      "notes": "Required for Medic UX/iOS if Figma remains source of truth."
+    }
+  ],
+  "roles": [
+    {
+      "paperclip_role": "CTO",
+      "codex_primary_agents": ["multi-agent-coordinator", "workflow-orchestrator", "architect-reviewer"],
+      "codex_support": {
+        "agents": ["project-manager", "business-analyst"],
+        "skills": ["create-plan"],
+        "mcp": ["codebase-memory", "context7", "serena"]
+      },
+      "gaps": ["superpowers:brainstorming", "superpowers:dispatching-parallel-agents"]
+    },
+    {
+      "paperclip_role": "PythonEngineer",
+      "codex_primary_agents": ["python-pro", "backend-developer"],
+      "codex_support": {
+        "agents": ["test-automator", "debugger", "performance-engineer", "security-auditor"],
+        "mcp": ["codebase-memory", "context7", "serena"]
+      },
+      "gaps": ["superpowers:test-driven-development", "superpowers:verification-before-completion"]
+    },
+    {
+      "paperclip_role": "InfraEngineer",
+      "codex_primary_agents": ["devops-engineer", "docker-expert", "deployment-engineer"],
+      "codex_support": {
+        "agents": ["sre-engineer", "platform-engineer", "security-auditor"],
+        "mcp": ["context7", "serena"]
+      },
+      "gaps": ["superpowers:test-driven-development", "superpowers:systematic-debugging"]
+    },
+    {
+      "paperclip_role": "CodeReviewer",
+      "codex_primary_agents": ["code-reviewer", "reviewer"],
+      "codex_support": {
+        "agents": ["architect-reviewer", "security-auditor", "test-automator"],
+        "skills": ["gh-address-comments", "gh-fix-ci"],
+        "mcp": ["codebase-memory", "context7", "serena"]
+      },
+      "gaps": ["pr-review-toolkit:*"]
+    },
+    {
+      "paperclip_role": "ArchitectReviewer",
+      "codex_primary_agents": ["architect-reviewer"],
+      "codex_support": {
+        "agents": ["code-reviewer", "docs-researcher"],
+        "mcp": ["context7", "serena"]
+      },
+      "gaps": ["role naming decision: OpusArchitectReviewer vs separate Codex ArchitectReviewer"]
+    },
+    {
+      "paperclip_role": "QAEngineer",
+      "codex_primary_agents": ["qa-expert", "test-automator"],
+      "codex_support": {
+        "agents": ["debugger", "error-detective", "performance-engineer"],
+        "skills": ["webapp-testing"],
+        "mcp": ["playwright", "serena"]
+      },
+      "gaps": ["superpowers:test-driven-development", "superpowers:verification-before-completion"]
+    },
+    {
+      "paperclip_role": "SecurityAuditor",
+      "codex_primary_agents": ["security-auditor", "security-engineer"],
+      "codex_support": {
+        "agents": ["penetration-tester", "compliance-auditor", "risk-manager"]
+      },
+      "gaps": ["Semgrep MCP", "Snyk MCP", "GitGuardian MCP"]
+    },
+    {
+      "paperclip_role": "ResearchAgent",
+      "codex_primary_agents": ["research-analyst", "search-specialist"],
+      "codex_support": {
+        "agents": ["docs-researcher", "competitive-analyst", "trend-analyst"],
+        "skills": ["openai-docs"]
+      },
+      "gaps": ["tavily MCP", "research-deep workflow"]
+    },
+    {
+      "paperclip_role": "TechnicalWriter",
+      "codex_primary_agents": ["technical-writer", "documentation-engineer"],
+      "codex_support": {
+        "agents": ["docs-researcher", "qa-expert"],
+        "skills": ["create-plan"]
+      },
+      "gaps": ["fresh-checkout verification skill"]
+    },
+    {
+      "paperclip_role": "MCPEngineer",
+      "codex_primary_agents": ["mcp-developer", "api-designer", "python-pro"],
+      "codex_support": {
+        "agents": ["security-auditor", "test-automator"],
+        "skills": ["mcp-builder"],
+        "mcp": ["context7", "serena"]
+      },
+      "gaps": ["claude-api skill for Anthropic SDK patterns"]
+    },
+    {
+      "paperclip_role": "iOSEngineer",
+      "codex_primary_agents": ["swift-pro", "swift-expert", "mobile-developer"],
+      "codex_support": {
+        "agents": ["ui-designer", "kotlin-specialist", "test-automator"],
+        "skills": ["swift-pro"]
+      },
+      "gaps": []
+    },
+    {
+      "paperclip_role": "UXDesigner",
+      "codex_primary_agents": ["frontend-design", "ui-designer", "ux-researcher"],
+      "codex_support": {
+        "agents": ["accessibility-tester", "frontend-developer"],
+        "skills": ["frontend-design", "webapp-testing"]
+      },
+      "gaps": ["figma MCP", "magic MCP"]
+    }
+  ]
+}
