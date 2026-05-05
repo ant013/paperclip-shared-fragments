@@ -1,6 +1,6 @@
 ## Wake discipline
 
-> Upstream paperclip "heartbeat" = any wake-execution-window. Here: DISABLED (`runtimeConfig.heartbeat.enabled: false`) — all wakes event-triggered (assignment/@mention/blocker-resolved/recovery). Read "heartbeat" as "wake-execution-window".
+> Upstream paperclip "heartbeat" = any wake-execution-window. Here: DISABLED (`runtimeConfig.heartbeat.enabled: false`) — all wakes event-triggered.
 
 On every wake, check only **three** things:
 
