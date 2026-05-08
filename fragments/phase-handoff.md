@@ -53,6 +53,14 @@ Formal mention `[@](agent://uuid)` only — not plain `@Role`. Plain works for c
 
 Any missing → don't close, escalate Board.
 
+### Autonomous queue propagation (iron rule, post-merge)
+
+After PR squash-merge, CTO MUST:
+1. `PATCH issue` → `status=done, assigneeAgentId=null, assigneeUserId=null` + comment with merge SHA. Silent done = chain breaks.
+2. If issue body lists "next-queue" / queue-position / autonomous-trigger pointer to a follow-up slice — POST a new issue for that next position, `assigneeAgentId=<my-team CTO>`, body links spec/plan + "queue N+1/M". Skipping = next slice never starts.
+
+Precedent: GIM-229 stalled 12h post-merge because PR was squashed but issue stayed `blocked` and #6 was never opened.
+
 ### Phase 4.1 QA-evidence comment format
 
 ```
