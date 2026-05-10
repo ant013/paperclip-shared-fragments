@@ -13,6 +13,6 @@ Discipline (post-Phase 4.1):
 
 Useful tools:
 - palace.memory.health() — pre-smoke + post-smoke comparison
-- palace.code.search_graph(label="Function", name_pattern="<smoke target>", project="repos-gimle") — verify symbol exists in CM after rebuild
+- palace.code.search_graph(label="Function", name_pattern="<smoke target>", project="{{CODEBASE_MEMORY_PROJECT}}") — verify symbol exists in CM after rebuild
 - palace.memory.lookup(entity_type="Symbol", filters={"qualified_name_contains": "<target>"}, limit=2) — verify bridge wrote target
 - palace.memory.decide(...) — record post-smoke verdict: decision_kind="review-approve" with evidence_ref of PR URL

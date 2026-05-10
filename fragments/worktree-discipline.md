@@ -12,7 +12,7 @@ Paperclip creates a git worktree per issue. Work only inside it:
 
 Worktree isolation ≠ memory isolation. Claude/CX teams share code knowledge:
 
-- `palace.code.*` / codebase-memory with project `repos-gimle` for indexed search/architecture/impact.
+- `palace.code.*` / codebase-memory with project `{{CODEBASE_MEMORY_PROJECT}}` for indexed search/architecture/impact.
 - `serena` only for current worktree + branch state.
 - Durable findings: write via `palace.memory.decide(...)`, read via `palace.memory.lookup(...)`.
 - Each finding needs provenance: issue id, branch, commit SHA, source path/symbol, `canonical|provisional`, evidence.

@@ -10,7 +10,7 @@ Phase 3.2 Adversarial review:
   - Spec drift: any plan task missing from commits = red flag
 
 Useful tools:
-- palace.code.query_graph(query="MATCH (n:Function) WHERE n.qualified_name CONTAINS '<changed file>' RETURN n.name, n.in_degree, n.out_degree", project="repos-gimle") — coupling = risk
-- palace.code.search_code(pattern="except:|except Exception", project="repos-gimle") — bare except hunt
+- palace.code.query_graph(query="MATCH (n:Function) WHERE n.qualified_name CONTAINS '<changed file>' RETURN n.name, n.in_degree, n.out_degree", project="{{CODEBASE_MEMORY_PROJECT}}") — coupling = risk
+- palace.code.search_code(pattern="except:|except Exception", project="{{CODEBASE_MEMORY_PROJECT}}") — bare except hunt
 - palace.memory.lookup(entity_type="Decision", filters={"decision_maker_claimed": "opusarchitectreviewer"}, limit=5) — past adversarial findings
 - palace.memory.decide(...) — record verdict: decision_kind="review-approve" with confidence rubric
