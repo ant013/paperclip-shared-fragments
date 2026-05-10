@@ -11,7 +11,7 @@ Phase 3.1 Mechanical:
 - Scope audit: `git log origin/develop..HEAD --name-only | sort -u` — every file in slice's declared scope
 
 Useful tools:
-- palace.code.search_graph(qn_pattern="<scope>", project="{{CODEBASE_MEMORY_PROJECT}}") — what's in scope
-- palace.code.query_graph(query="MATCH (s:Symbol) WHERE s.qualified_name CONTAINS '<scope>' RETURN count(s)", project="{{CODEBASE_MEMORY_PROJECT}}") — scope sizing
-- palace.memory.lookup(entity_type="Decision", filters={"decision_maker_claimed": "codereviewer"}, limit=5) — past reviews
-- palace.memory.decide(...) — record APPROVE/REJECT: decision_kind="review-approve" or "scope-change"
+- {{mcp.tool_namespace}}.code.search_graph(qn_pattern="<scope>", project="{{CODEBASE_MEMORY_PROJECT}}") — what's in scope
+- {{mcp.tool_namespace}}.code.query_graph(query="MATCH (s:Symbol) WHERE s.qualified_name CONTAINS '<scope>' RETURN count(s)", project="{{CODEBASE_MEMORY_PROJECT}}") — scope sizing
+- {{mcp.tool_namespace}}.memory.lookup(entity_type="Decision", filters={"decision_maker_claimed": "codereviewer"}, limit=5) — past reviews
+- {{mcp.tool_namespace}}.memory.decide(...) — record APPROVE/REJECT: decision_kind="review-approve" or "scope-change"

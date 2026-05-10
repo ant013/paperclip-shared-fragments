@@ -12,7 +12,7 @@ Discipline (post-Phase 4.1):
 - Per worktree-discipline.md (GIM-90)
 
 Useful tools:
-- palace.memory.health() — pre-smoke + post-smoke comparison
-- palace.code.search_graph(label="Function", name_pattern="<smoke target>", project="{{CODEBASE_MEMORY_PROJECT}}") — verify symbol exists in CM after rebuild
-- palace.memory.lookup(entity_type="Symbol", filters={"qualified_name_contains": "<target>"}, limit=2) — verify bridge wrote target
-- palace.memory.decide(...) — record post-smoke verdict: decision_kind="review-approve" with evidence_ref of PR URL
+- {{mcp.tool_namespace}}.memory.health() — pre-smoke + post-smoke comparison
+- {{mcp.tool_namespace}}.code.search_graph(label="Function", name_pattern="<smoke target>", project="{{CODEBASE_MEMORY_PROJECT}}") — verify symbol exists in CM after rebuild
+- {{mcp.tool_namespace}}.memory.lookup(entity_type="Symbol", filters={"qualified_name_contains": "<target>"}, limit=2) — verify bridge wrote target
+- {{mcp.tool_namespace}}.memory.decide(...) — record post-smoke verdict: decision_kind="review-approve" with evidence_ref of PR URL

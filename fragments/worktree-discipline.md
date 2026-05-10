@@ -12,12 +12,12 @@ Paperclip creates a git worktree per issue. Work only inside it:
 
 Worktree isolation ≠ memory isolation. Claude/CX teams share code knowledge:
 
-- `palace.code.*` / codebase-memory with project `{{CODEBASE_MEMORY_PROJECT}}` for indexed search/architecture/impact.
+- `{{mcp.tool_namespace}}.code.*` / codebase-memory with project `{{CODEBASE_MEMORY_PROJECT}}` for indexed search/architecture/impact.
 - `serena` only for current worktree + branch state.
-- Durable findings: write via `palace.memory.decide(...)`, read via `palace.memory.lookup(...)`.
+- Durable findings: write via `{{mcp.tool_namespace}}.memory.decide(...)`, read via `{{mcp.tool_namespace}}.memory.lookup(...)`.
 - Each finding needs provenance: issue id, branch, commit SHA, source path/symbol, `canonical|provisional`, evidence.
 - `canonical` = grounded in `origin/develop` or merged commits. `provisional` = branch-local hints needing local verification.
-- Never treat other team's uncommitted files as project truth — share via commits/PRs/comments/`palace.memory`.
+- Never treat other team's uncommitted files as project truth — share via commits/PRs/comments/`{{mcp.tool_namespace}}.memory`.
 
 ## Cross-branch carry-over forbidden
 

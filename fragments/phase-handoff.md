@@ -86,7 +86,7 @@ CTO after squash-merge: `PATCH status=done, assignee=null` (per top rule) + POST
 1. Commit SHA: `<git rev-parse HEAD on FB>`
 2. `docker compose --profile <x> ps` — containers healthy
 3. `/healthz` — `{"status":"ok",...}` (or service equivalent)
-4. Real MCP tool call — `palace.<tool>()` + output (not just healthz)
+4. Real MCP tool call — `{{mcp.tool_namespace}}.<tool>()` + output (not just healthz)
 5. Ingest CLI / runtime smoke — command output
 6. Plan-specific invariant — e.g. `MATCH (n) RETURN DISTINCT n.group_id`, expected 1 row
 7. Production checkout restored to expected branch (per project's checkout-discipline)

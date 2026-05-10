@@ -14,6 +14,6 @@ Phase 4.2 Merge (CTO-ONLY per compliance-enforcement.md):
 - `gh pr merge <N> --squash --delete-branch`
 
 Useful tools:
-- palace.memory.lookup(entity_type="Decision", filters={"decision_maker_claimed": "cto"}, limit=5) — past CTO decisions
-- palace.memory.health() — verify before merge
-- palace.memory.decide(...) — record after merge: decision_kind="board-ratification" or "spec-revision"
+- {{mcp.tool_namespace}}.memory.lookup(entity_type="Decision", filters={"decision_maker_claimed": "cto"}, limit=5) — past CTO decisions
+- {{mcp.tool_namespace}}.memory.health() — verify before merge
+- {{mcp.tool_namespace}}.memory.decide(...) — record after merge: decision_kind="board-ratification" or "spec-revision"
