@@ -9,7 +9,7 @@ In-flight slices (status=in_progress, paperclip):
 Backlog candidates (priority>=high, status=backlog, top 5):
 - {{ backlog_high_priority }}
 
-Note: your local operator-memory dir at `~/.claude/projects/-Users-ant013-Android-Gimle-Palace/memory/`
+Note: your local operator-memory dir at `{{paths.operator_memory_dir}}`
 is on your MacBook — `/prime` reads MCP-side state only. Use Read tool directly for memory files.
 
 Useful tools (call when investigating):
