@@ -23,7 +23,7 @@ Worktree isolation ≠ memory isolation. Claude/CX teams share code knowledge:
 
 No cherry-pick / copy-paste between parallel slice branches. If Slice B needs Slice A, declare `depends_on: A` in spec, rebase on develop after A merges. CR enforces: every changed file must be in slice's declared scope.
 
-Why: GIM-75/76 (2026-04-24) — see `docs/postmortems/2026-04-26-fragment-extraction-postmortems.md`.
+Why: {{evidence.worktree_discipline_issue_pair}} (2026-04-24) — see `docs/postmortems/2026-04-26-fragment-extraction-postmortems.md`.
 
 ## QA: restore checkout to develop after Phase 4.1
 
@@ -33,4 +33,4 @@ Before run exit, on iMac:
 
 Verify `git branch --show-current` = `develop`. Don't `cd` into another team's checkout — Claude/CX may have separate roots; use yours.
 
-Why: team checkouts drive their own deploys/observability. GIM-48 (2026-04-18).
+Why: team checkouts drive their own deploys/observability. {{evidence.graphiti_mock_issue}} (2026-04-18).

@@ -70,7 +70,7 @@ body: "[@CodeReviewer](agent://<uuid>?i=eye) fix ready ([STA-29](/STA/issues/STA
 **Do:**
 
 1. `GET /api/issues/{id}` → read `executionAgentNameKey`.
-2. Comment to holder: `"@CTO release execution lock on [GIM-5], I'm ready to close"`.
+2. Comment to holder: `"@CTO release execution lock on [{{ISSUE_PREFIX}}-5], I'm ready to close"`.
 3. Alternative — if holder unavailable, `PATCH ... assigneeAgentId=<original-assignee>` → originator closes.
 4. Don't retry close with the same JWT — without release, 409 keeps coming.
 

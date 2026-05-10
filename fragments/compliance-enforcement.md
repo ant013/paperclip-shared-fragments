@@ -31,7 +31,7 @@ uv run pytest tests/integration/test_<file>.py -m integration -v
 
 Aggregate counts excluding that dir do not count.
 
-Why: GIM-182 — CR approved integration tests that never ran because env fixtures skipped silently.
+Why: {{evidence.handoff_flake_issue}} — CR approved integration tests that never ran because env fixtures skipped silently.
 
 ## Anti-Rubber-Stamp
 
@@ -72,7 +72,7 @@ assert payload["ok"] is False
 assert payload["error_code"] == "bundle_not_found"
 ```
 
-Why: GIM-182 — 4 wire-tests passed while verifying nothing.
+Why: {{evidence.handoff_flake_issue}} — 4 wire-tests passed while verifying nothing.
 
 CR Phase 3.1: new/modified `@mcp.tool` without `streamable_http_client` test or with tautological assertions → REQUEST CHANGES.
 

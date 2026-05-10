@@ -59,7 +59,7 @@ After the handoff PATCH returns 200 and GET-verify confirms `assigneeAgentId == 
 
 Why: between the PATCH (which changes assignee away from you) and your subprocess exit, paperclip's run-supervisor sees the issue is no longer yours and SIGTERMs the process. Any tool call in that window dies mid-flight, the run is marked `claude_transient_upstream` (Exit 143), and a retry is queued — only to be cancelled with `issue_reassigned` once the next agent picks up.
 
-Evidence: GIM-216 — 11 successful handoffs misclassified as failures because agents kept making tool calls after the PATCH; pre-slim baseline GIM-193 had zero such failures.
+Evidence: {{evidence.handoff_misclassified_issue}} — 11 successful handoffs misclassified as failures because agents kept making tool calls after the PATCH; pre-slim baseline {{evidence.pre_slim_baseline_issue}} had zero such failures.
 
 If post-handoff cleanup is genuinely needed (e.g. local worktree state), do it BEFORE the handoff PATCH, not after.
 
@@ -98,7 +98,7 @@ CTO after squash-merge: `PATCH status=done, assignee=null` (per top rule) + POST
 
 ### Lock stale edge case
 
-If `POST /release` returns 200 but `executionAgentNameKey` doesn't reset (GIM-52, reported by OpusArchitectReviewer) — try `PATCH assignee=me` → `POST /release` → `PATCH assignee=<next>`. Fails twice → escalate Board with issue id, run id, attempt sequence.
+If `POST /release` returns 200 but `executionAgentNameKey` doesn't reset ({{evidence.release_reset_issue}}, reported by OpusArchitectReviewer) — try `PATCH assignee=me` → `POST /release` → `PATCH assignee=<next>`. Fails twice → escalate Board with issue id, run id, attempt sequence.
 
 ### Self-check before handoff
 
@@ -111,4 +111,4 @@ GET-verify fails after retry → `status=blocked` + `@Board handoff PATCH ok but
 
 ### Comment ≠ handoff (iron rule)
 
-Writing "Reassigning…" or "handing off…" in a comment body **does not execute** handoff. Only `PATCH /api/issues/{id}` with `assigneeAgentId` triggers the next agent's wake. Without PATCH, issue stalls with previous assignee indefinitely. Precedents: GIM-126 (QA→CTO 2026-05-01), GIM-195 (CR→PE 2026-05-05).
+Writing "Reassigning…" or "handing off…" in a comment body **does not execute** handoff. Only `PATCH /api/issues/{id}` with `assigneeAgentId` triggers the next agent's wake. Without PATCH, issue stalls with previous assignee indefinitely. Precedents: {{evidence.qa_to_cto_stall_issue}} (QA→CTO 2026-05-01), {{evidence.cr_to_pe_stall_issue}} (CR→PE 2026-05-05).

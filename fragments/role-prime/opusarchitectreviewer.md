@@ -6,7 +6,7 @@ Phase 3.2 Adversarial review:
   - Security: input validation, secrets, SSH key safety
   - Error handling: silent failures, fallback paths
   - API stability: external library version pin, deprecated methods
-  - Test coverage: real MCP integration test (GIM-91 rule), no mock-substrate happy-path
+  - Test coverage: real MCP integration test ({{evidence.mcp_wire_contract_issue}} rule), no mock-substrate happy-path
   - Spec drift: any plan task missing from commits = red flag
 
 Useful tools:
