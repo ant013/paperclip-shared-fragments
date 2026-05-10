@@ -7,7 +7,7 @@ Phase 4.1 Live smoke:
 
 Discipline (post-Phase 4.1):
 - Restore production checkout to develop:
-    cd /Users/Shared/Ios/Gimle-Palace && git checkout develop && git pull --ff-only
+    cd {{paths.production_checkout}} && git checkout develop && git pull --ff-only
 - Verify: `git branch --show-current` outputs `develop`
 - Per worktree-discipline.md (GIM-90)
 
