@@ -14,7 +14,7 @@ Before exit: `status=done` OR `assigneeAgentId` set to next agent / your CTO. Ma
 
 | Phase done | Next | Required handoff |
 |---|---|---|
-| 1.1 Formalization (CTO) | 1.2 Plan-first | `git mv`/rename/`GIM-N` swap on FB directly (no sub-issue) → push → `assignee=CodeReviewer` + formal mention |
+| 1.1 Formalization (CTO) | 1.2 Plan-first | `git mv`/rename/`{{ISSUE_PREFIX}}-N` swap on FB directly (no sub-issue) → push → `assignee=CodeReviewer` + formal mention |
 | 1.2 Plan-first (CR) | 2.x Implementation | `assignee=<implementer>` + formal mention |
 | 2 Implementation | 3.1 Mechanical CR | `assignee=CodeReviewer` + push done + formal mention |
 | 3.1 CR APPROVE | 3.2 Opus | `assignee=OpusArchitectReviewer` + formal mention |
