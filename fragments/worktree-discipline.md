@@ -1,3 +1,6 @@
+> **DEPRECATED (UAA Phase A, 2026-05).** Replaced by `fragments/worktree/active.md` (expanded canonical content).
+> Will be removed at UAA cleanup gate (spec §10.5).
+
 ## Worktree discipline
 
 Paperclip creates a git worktree per issue. Work only inside it:

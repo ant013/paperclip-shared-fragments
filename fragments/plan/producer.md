@@ -1,6 +1,3 @@
-> **DEPRECATED (UAA Phase A, 2026-05).** Replaced by `fragments/plan/producer.md`.
-> Will be removed at UAA cleanup gate (spec §10.5).
-
 ## Plan-first discipline (multi-agent tasks)
 
 Any issue requiring **3+ subtasks** OR **handoff between agents** — REQUIRED to invoke `superpowers:writing-plans` skill BEFORE decomposing in comments.
