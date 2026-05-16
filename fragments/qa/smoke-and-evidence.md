@@ -8,9 +8,9 @@ On the production target (iMac for gimle, dev Mac for codex-only uaudit):
    ```
    cd {{paths.production_checkout}} && git fetch && git checkout {{project.integration_branch}} && git pull --ff-only
    ```
-   Codified after GIM-48: feature-branch checkout in production_checkout caused stale-code QA pass.
-2. **Run real MCP tool against real palace-mcp/{{mcp.service_name}}** (not testcontainers):
-   - For new extractor: `palace.ingest.run_extractor(name="<new>", project="<test-project>")`
+   Codified after {{project.issue_prefix}}-48: feature-branch checkout in production_checkout caused stale-code QA pass.
+2. **Run real MCP tool against real {{mcp.service_name}}/{{mcp.service_name}}** (not testcontainers):
+   - For new extractor: `{{mcp.tool_namespace}}.ingest.run_extractor(name="<new>", project="<test-project>")`
    - For new tool: invoke directly via paperclip MCP client
 3. **Verify output via direct query** (Cypher for Neo4j, jq for JSON, sqlite3 for SQL):
    - Don't trust the tool's success envelope — query the actual side effect.
@@ -26,7 +26,7 @@ PR body must contain `## QA Evidence` section before merge. CI check `qa-evidenc
 **Smoke run on:** iMac, 2026-05-15T14:23Z, on commit <SHA>
 
 **1. Extractor invocation:**
-$ palace.ingest.run_extractor(name="my_extractor", project="gimle")
+$ {{mcp.tool_namespace}}.ingest.run_extractor(name="my_extractor", project="<project-slug>")
 {"ok": true, "run_id": "abc-...", "duration_ms": 1247, "nodes_written": 42, ...}
 
 **2. Direct Cypher verification:**
@@ -37,11 +37,11 @@ $ ./scripts/my-new-cli --target gimle
 ... actual output ...
 
 **4. Negative test (handles error correctly):**
-$ palace.ingest.run_extractor(name="my_extractor", project="nonexistent")
+$ {{mcp.tool_namespace}}.ingest.run_extractor(name="my_extractor", project="nonexistent")
 {"ok": false, "error_code": "project_not_registered", ...}
 ```
 
-### Forbidden evidence patterns (codified after GIM-127)
+### Forbidden evidence patterns (codified after {{project.issue_prefix}}-127)
 
 - Numbers exactly matching dev-Mac fixture oracle while claiming iMac smoke.
 - Paraphrasing tool output ("returned successfully") instead of pasting envelope.

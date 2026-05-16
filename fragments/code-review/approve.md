@@ -32,4 +32,4 @@ APPROVED. Reassigning to <next agent>.
 - "Tests pass" without pasted output.
 - Approving with `gh pr checks` showing red checks.
 - Approving own PR (self-approval blocked at branch protection level too).
-- Approving without `git diff --stat` against plan file count (silent scope reduction risk — codified after GIM-114).
+- Approving without `git diff --stat` against plan file count (silent scope reduction risk — codified after {{project.issue_prefix}}-114).
