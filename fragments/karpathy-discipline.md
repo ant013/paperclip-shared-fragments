@@ -1,6 +1,8 @@
-> **DEPRECATED (UAA Phase A, 2026-05).** Replaced by `fragments/universal/karpathy.md`.
-> This file is kept for builder back-compat with un-migrated role files.
-> Will be removed at UAA cleanup gate (spec §10.5).
+<!--
+**DEPRECATED (UAA Phase A, 2026-05).** Replaced by `fragments/universal/karpathy.md`.
+This file is kept for builder back-compat with un-migrated role files.
+Will be removed at UAA cleanup gate (spec §10.5).
+-->
 
 ## Coding Discipline
 

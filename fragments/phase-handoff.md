@@ -1,5 +1,7 @@
-> **DEPRECATED (UAA Phase A, 2026-05).** Content split into `fragments/handoff/basics.md` (universal) and `fragments/handoff/phase-orchestration.md` (cto-only).
-> Will be removed at UAA cleanup gate (spec §10.5).
+<!--
+**DEPRECATED (UAA Phase A, 2026-05).** Content split into `fragments/handoff/basics.md` (universal) and `fragments/handoff/phase-orchestration.md` (cto-only).
+Will be removed at UAA cleanup gate (spec §10.5).
+-->
 
 <!-- paperclip:handoff-contract:v2 -->
 ## Phase handoff discipline (iron rule)

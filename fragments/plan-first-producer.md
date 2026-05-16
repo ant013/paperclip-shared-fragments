@@ -1,5 +1,7 @@
-> **DEPRECATED (UAA Phase A, 2026-05).** Replaced by `fragments/plan/producer.md`.
-> Will be removed at UAA cleanup gate (spec §10.5).
+<!--
+**DEPRECATED (UAA Phase A, 2026-05).** Replaced by `fragments/plan/producer.md`.
+Will be removed at UAA cleanup gate (spec §10.5).
+-->
 
 ## Plan-first discipline (multi-agent tasks)
 

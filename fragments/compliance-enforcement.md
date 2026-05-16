@@ -1,5 +1,7 @@
-> **DEPRECATED (UAA Phase A, 2026-05).** Content split: reviewer-side APPROVE → `fragments/code-review/approve.md`; opus adversarial → `fragments/code-review/adversarial.md`; qa smoke+evidence → `fragments/qa/smoke-and-evidence.md`.
-> Will be removed at UAA cleanup gate (spec §10.5).
+<!--
+**DEPRECATED (UAA Phase A, 2026-05).** Content split: reviewer-side APPROVE → `fragments/code-review/approve.md`; opus adversarial → `fragments/code-review/adversarial.md`; qa smoke+evidence → `fragments/qa/smoke-and-evidence.md`.
+Will be removed at UAA cleanup gate (spec §10.5).
+-->
 
 ## Evidence Rigor
 

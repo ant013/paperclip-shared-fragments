@@ -1,5 +1,7 @@
-> **DEPRECATED (UAA Phase A, 2026-05).** Content split into `fragments/git/{commit-and-push,merge-readiness,merge-state-decoder,release-cut}.md`. New role-craft files include the relevant subset per profile.
-> Will be removed at UAA cleanup gate.
+<!--
+**DEPRECATED (UAA Phase A, 2026-05).** Content split into `fragments/git/{commit-and-push,merge-readiness,merge-state-decoder,release-cut}.md`. New role-craft files include the relevant subset per profile.
+Will be removed at UAA cleanup gate.
+-->
 
 ## Git workflow (iron rule)
 

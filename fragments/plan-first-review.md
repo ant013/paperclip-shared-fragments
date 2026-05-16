@@ -1,5 +1,7 @@
-> **DEPRECATED (UAA Phase A, 2026-05).** Replaced by `fragments/plan/review.md`.
-> Will be removed at UAA cleanup gate (spec §10.5).
+<!--
+**DEPRECATED (UAA Phase A, 2026-05).** Replaced by `fragments/plan/review.md`.
+Will be removed at UAA cleanup gate (spec §10.5).
+-->
 
 ### Plan-first discipline
 - [ ] Multi-agent tasks (3+ subtasks): plan file exists at `docs/superpowers/plans/YYYY-MM-DD-{{ISSUE_PREFIX}}-NN-*.md`

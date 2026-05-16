@@ -1,5 +1,7 @@
-> **DEPRECATED (UAA Phase A, 2026-05).** Replaced by `fragments/universal/escalation-board.md`.
-> Will be removed at UAA cleanup gate.
+<!--
+**DEPRECATED (UAA Phase A, 2026-05).** Replaced by `fragments/universal/escalation-board.md`.
+Will be removed at UAA cleanup gate.
+-->
 
 ## Escalation to Board when blocked
 

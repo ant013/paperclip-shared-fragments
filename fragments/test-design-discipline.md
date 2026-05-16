@@ -1,5 +1,7 @@
-> **DEPRECATED (UAA Phase A, 2026-05).** QA-relevant content moved to `fragments/qa/smoke-and-evidence.md`.
-> Will be removed at UAA cleanup gate (spec §10.5).
+<!--
+**DEPRECATED (UAA Phase A, 2026-05).** QA-relevant content moved to `fragments/qa/smoke-and-evidence.md`.
+Will be removed at UAA cleanup gate (spec §10.5).
+-->
 
 ## Test Design Discipline
 
