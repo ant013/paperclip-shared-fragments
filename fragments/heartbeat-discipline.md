@@ -1,3 +1,9 @@
+<!--
+**DEPRECATED (UAA Phase A, 2026-05).** Content split into `fragments/universal/wake-and-handoff-basics.md` (wake-discipline + handoff basics) and `fragments/handoff/phase-orchestration.md` (cto-only choreography).
+Heartbeat-config content removed entirely (paperclip heartbeat is OFF).
+Will be removed at UAA cleanup gate.
+-->
+
 ## Wake discipline
 
 > Upstream paperclip "heartbeat" = any wake-execution-window. Here: DISABLED (`runtimeConfig.heartbeat.enabled: false`) — all wakes event-triggered.

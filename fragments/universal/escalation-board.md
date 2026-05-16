@@ -1,8 +1,3 @@
-<!--
-**DEPRECATED (UAA Phase A, 2026-05).** Replaced by `fragments/universal/escalation-board.md`.
-Will be removed at UAA cleanup gate.
--->
-
 ## Escalation to Board when blocked
 
 If you cannot progress on an issue, do not improvise, pivot, or create preparatory issues. Escalate and wait.

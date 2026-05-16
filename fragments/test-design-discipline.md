@@ -1,3 +1,8 @@
+<!--
+**DEPRECATED (UAA Phase A, 2026-05).** QA-relevant content moved to `fragments/qa/smoke-and-evidence.md`.
+Will be removed at UAA cleanup gate (spec §10.5).
+-->
+
 ## Test Design Discipline
 
 **Substrate** means external systems/classes: DB drivers, HTTP clients, protocol libraries, subprocesses, or filesystem-as-subject.

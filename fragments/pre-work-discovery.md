@@ -1,3 +1,8 @@
+<!--
+**DEPRECATED (UAA Phase A, 2026-05).** Content split into `fragments/pre-work/{codebase-memory-first,sequential-thinking,existing-field-semantics}.md`.
+Will be removed at UAA cleanup gate (spec §10.5).
+-->
+
 ## Pre-work Discovery
 
 Before coding/decomposing, verify the work doesn't already exist:
