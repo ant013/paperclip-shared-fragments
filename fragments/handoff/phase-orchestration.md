@@ -24,13 +24,13 @@ Handoff (implementer → CR): `@CodeReviewer mechanical review, PR <link>`.
 
 CR pastes `uv run ruff check && uv run mypy src/ && uv run pytest` output (or project equivalent) AND `gh pr checks <PR>` output. APPROVE only with green CI proof. No "LGTM" rubber-stamps.
 
-Handoff (CR → architect reviewer): `@OpusArchitectReviewer adversarial review, PR <link>`.
+Handoff (CR → architect reviewer): `@ArchitectReviewer adversarial review, PR <link>` (project may hire a specific architect-reviewer agent per its target).
 
-### Phase 3.2 — Adversarial review (OpusArchitectReviewer)
+### Phase 3.2 — Adversarial review (architect reviewer)
 
 Find architectural problems, attack surfaces, missed edge cases. Findings addressed before Phase 4.
 
-Handoff (Opus → QA): `@QAEngineer live smoke, PR <link>`.
+Handoff (architect-reviewer → QA): `@QAEngineer live smoke, PR <link>`.
 
 ### Phase 4.1 — Live smoke (QAEngineer)
 

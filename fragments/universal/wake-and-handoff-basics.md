@@ -15,7 +15,7 @@ None of three → **exit immediately** with `No assignments, idle exit`.
 
 ### Cross-session memory — FORBIDDEN
 
-If you "remember" past work at session start (*"let me continue where I left off"*) — that's claude CLI cache, not reality. Source of truth is the Paperclip API:
+If you "remember" past work at session start (*"let me continue where I left off"*) — that's CLI runtime cache, not reality. Source of truth is the Paperclip API:
 
 - Issue exists, assigned to you now → work
 - Issue deleted / cancelled / done → don't resurrect, don't reopen
