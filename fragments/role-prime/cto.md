@@ -7,7 +7,7 @@ Phase 1.1 Formalize:
 - Write plan at `docs/superpowers/plans/<date>-{{ISSUE_PREFIX}}-N-<slug>.md`
 - Reassign to CodeReviewer for Phase 1.2
 
-Phase 4.2 Merge (CTO-ONLY per compliance-enforcement.md):
+Phase 4.2 Merge (CTO-ONLY per `code-review/approve.md` § Merge gate):
 - Verify CI green: `gh pr view <PR> --json statusCheckRollup`
 - Verify QA Phase 4.1 evidence comment present
 - Verify Phase 3.2 Opus APPROVE present

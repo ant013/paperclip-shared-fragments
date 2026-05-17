@@ -2,7 +2,7 @@
 
 Phase 2 Implementation:
 - Read plan tasks from `docs/superpowers/plans/<slice>.md`
-- Discipline reminders (compliance-enforcement.md):
+- Discipline reminders (per `code-review/approve.md` § Merge gate):
   - Phase 4.2 squash-merge — CTO-only. Push final fix and stop.
   - MCP wire-contract test rule ({{evidence.mcp_wire_contract_issue}}) — any new @mcp.tool needs streamablehttp_client integration test
   - Use `gh pr create --body-file` (NOT inline `--body`)

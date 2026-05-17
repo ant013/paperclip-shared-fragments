@@ -7,7 +7,7 @@ Phase 1.2 Plan-first review:
 
 Phase 3.1 Mechanical:
 - Run: `cd {{paths.primary_mcp_service_dir}} && uv run ruff check && uv run ruff format --check && uv run mypy src/ && uv run pytest`
-- Paste full output in APPROVE comment (anti-rubber-stamp rule, compliance-enforcement.md)
+- Paste full output in APPROVE comment (anti-rubber-stamp rule per `code-review/approve.md`)
 - Scope audit: `git log origin/develop..HEAD --name-only | sort -u` — every file in slice's declared scope
 
 Useful tools:

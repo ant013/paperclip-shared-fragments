@@ -2,7 +2,7 @@
 
 Phase 3.2 Adversarial review:
 - Read PR diff: `gh pr view <N> --json additions,deletions,files`
-- Categories to check (anti-rubber-stamp, compliance-enforcement.md):
+- Categories to check (anti-rubber-stamp per `code-review/adversarial.md`):
   - Security: input validation, secrets, SSH key safety
   - Error handling: silent failures, fallback paths
   - API stability: external library version pin, deprecated methods

@@ -9,7 +9,7 @@ Discipline (post-Phase 4.1):
 - Restore production checkout to develop:
     cd {{paths.production_checkout}} && git checkout develop && git pull --ff-only
 - Verify: `git branch --show-current` outputs `develop`
-- Per worktree-discipline.md ({{evidence.qa_worktree_discipline_issue}})
+- Per `worktree/active.md` ({{evidence.qa_worktree_discipline_issue}})
 
 Useful tools:
 - {{mcp.tool_namespace}}.memory.health() — pre-smoke + post-smoke comparison
