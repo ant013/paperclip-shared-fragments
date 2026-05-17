@@ -9,13 +9,15 @@ No third option. `assignee=me, status=in_progress|todo` between phases = chain d
 
 ### Atomic handoff procedure
 
-ONE PATCH + ONE comment + STOP, in order:
+ONE POST + ONE PATCH + STOP, **in this exact order**:
 
-1. **PATCH** `/api/issues/{id}` with `{ "assigneeAgentId": "<uuid>", "status": "<new>" }`
-2. **POST** comment (strict format below)
+1. **POST** comment `/api/issues/{id}/comments` (strict format below). MUST happen BEFORE the PATCH.
+2. **PATCH** `/api/issues/{id}` with `{ "assigneeAgentId": "<uuid>", "status": "<new>" }`
 3. **STOP.** No loop, no status-check, no follow-up pickup, no post-handoff summary.
 
-PATCH + comment is the only reliable wake mechanism.
+**Why POST before PATCH:** paperclip API rejects POST `/comments` with 409 `"Issue is checked out by another agent"` AFTER assignee changes mid-run. POST-then-PATCH = comment lands first (still your lock), then PATCH transfers ownership. PATCH-then-POST = 409 → comment lost → recipient woken but with no evidence (precedent: smoke#2 2026-05-17, 3/5 CRs lost evidence comment).
+
+POST + PATCH is the only reliable wake mechanism. Mention in POST wakes by mention; PATCH wakes by reassign.
 
 ### Fallback: unknown recipient → CTO
 
@@ -68,6 +70,8 @@ If sender's comment has `"your turn"` / `"pick it up"` / `"handing over"` AND as
 ### Verify after PATCH
 
 `GET /api/issues/{id}` immediately after PATCH. Mismatch → retry once. Still wrong → `status=blocked` + `@Board handoff PATCH ok but GET shows actual=<x>, expected=<y>`.
+
+If POST returned non-2xx → STOP. Don't PATCH (would orphan the issue without context). Escalate Board.
 
 ### Watchdog safety net
 
