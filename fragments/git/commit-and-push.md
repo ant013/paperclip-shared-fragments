@@ -27,7 +27,7 @@ git push -u origin feature/{{project.issue_prefix}}-N-<slug>
 
 Force-push: ONLY `--force-with-lease`, ONLY when you are the sole writer of the current phase. Bare `--force` is forbidden on every branch including features (eats teammate's commits).
 
-`develop` and `main` reject force-push at branch protection (no exceptions, no admin override).
+`develop` and `main` reject force-push at branch protection (no exceptions). CTO merge action is gated separately — see `universal/cto-merge-authority.md`.
 
 ### Post-commit verification
 

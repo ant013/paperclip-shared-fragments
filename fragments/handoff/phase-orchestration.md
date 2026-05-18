@@ -40,7 +40,7 @@ Handoff (QA → CTO): `@CTO QA evidence posted, ready to merge`.
 
 ### Phase 4.2 — Merge (CTO)
 
-CTO merges via squash on green CI + APPROVED CR review + QA evidence. No admin override.
+CTO merge gate + action: see [universal/cto-merge-authority.md](../universal/cto-merge-authority.md).
 
 Post-merge handoff: `@CTO release-cut planned for <date>` (CTO of self) or no handoff (slice complete).
 
