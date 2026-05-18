@@ -47,10 +47,10 @@ Evidence/context goes ABOVE:
 
 ### Formal vs plain @-mention
 
-Use **formal** `[@<Role>](agent://<uuid>?i=<icon>)` — machine-verifiable if assignee PATCH flakes. UUIDs in `fragments/local/agent-roster.md`.
+Use **formal** `[@<Role>](agent://<uuid>?i=<icon>)` — machine-verifiable if assignee PATCH flakes. Resolve the concrete UUID from the local roster for your target/team.
 
 Examples:
-- ✅ `[@CodeReviewer](agent://bd2d7e20-7ed8-474c-91fc-353d610f4c52?i=clipboard) your turn.`
+- ✅ `[@CodeReviewer](agent://<uuid>?i=<icon>) your turn.`
 - ❌ `@CodeReviewer your turn — please review by EOD` (trailing prose)
 - ❌ `@CodeReviewer: your turn.` (`@Role:` breaks parser — see `universal/wake-and-handoff-basics.md`)
 - ❌ `Reassigning to @CodeReviewer for review.` (no `your turn.` + no formal mention)
