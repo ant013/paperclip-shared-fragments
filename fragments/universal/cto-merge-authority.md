@@ -1,14 +1,12 @@
-## CTO autonomous merge
+## CTO merge
 
-CTO may merge when all true for PR head SHA `X`:
+MUST merge PR head `X` when ALL true on the PR's Paperclip issue:
+- CR's latest comment is `APPROVE` citing `X`.
+- QA's latest comment is `QA PASS` citing `X`.
+- `gh pr checks <N>` exits 0 with no PENDING required.
 
-1. CR's latest comment on the Paperclip issue is `APPROVE` for `X`.
-2. QA posted `QA PASS` on the same issue for `X`.
-3. Required GitHub checks are green for `X`.
+Run: `gh pr merge <N> --squash --admin --match-head-commit=X`.
 
-Action: `gh pr merge <N> --squash --match-head-commit=X`.
-Merge commit body MUST include: SHA `X`, CR comment URL, QA comment URL, required-check names + conclusions, Paperclip issue ID.
+Commit body MUST list: `X`; CR + QA comment URLs; required check names+conclusions; Paperclip issue ID.
 
-If `gh` rejects only with a PR-author-cannot-self-approve error (e.g. `Review must be from a user other than the PR author`), CTO may add `--admin` and restate gates 1-3 in the merge body. Any other rejection: `@Board blocked`, stop.
-
-Forbidden: direct push to protected branches, force-push, merging without CR+QA evidence.
+MUST NOT: await non-author GitHub review; await Board approval; force-push; push to protected branches; pass `--admin` if any gate fails.
