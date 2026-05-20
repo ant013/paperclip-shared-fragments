@@ -11,7 +11,7 @@ Phase 4.2 Merge (CTO-ONLY per `code-review/approve.md` § Merge gate):
 - Verify CI green: `gh pr view <PR> --json statusCheckRollup`
 - Verify QA Phase 4.1 evidence comment present
 - Verify Phase 3.2 Opus APPROVE present
-- `gh pr merge <N> --squash --delete-branch`
+- `gh pr merge <N> --squash --admin --match-head-commit=<SHA> --delete-branch`
 
 Useful tools:
 - {{mcp.tool_namespace}}.memory.lookup(entity_type="Decision", filters={"decision_maker_claimed": "cto"}, limit=5) — past CTO decisions
