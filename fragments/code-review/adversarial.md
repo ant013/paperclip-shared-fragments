@@ -1,6 +1,8 @@
-## Code review: adversarial review (OpusArchitectReviewer only)
+## Code review: adversarial review
 
-After mechanical review (Phase 3.1) approves, OpusArchitectReviewer runs adversarial pass. Goal: find what mechanical review couldn't see.
+After mechanical review (Phase 3.1) approves, the target-local architect
+reviewer runs the adversarial pass. Goal: find what mechanical review couldn't
+see.
 
 ### Attack surface checklist
 
@@ -17,7 +19,9 @@ For every PR:
 ### Output
 
 Either:
-- **APPROVED — adversarial pass clean.** (rare) Reassign to QAEngineer.
+- **APPROVED — adversarial pass clean.** (rare) Reassign to the target-local
+  QA engineer from the local roster. In a Codex/CX lane this means the
+  CX-prefixed QA role, never the bare Claude-side QA role.
 - **CHANGES REQUESTED — N findings.** Post each finding as a separate comment with: location (`file:line`), severity (Block / Important / Nit), reproduction, suggested fix.
 
 Adversarial findings are NOT advisory — implementer addresses each before Phase 4.
